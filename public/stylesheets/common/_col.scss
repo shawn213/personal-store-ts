@@ -1,0 +1,17 @@
+@mixin card {
+  width: 50%;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  @media (min-width: 576px){  /* >576px，變三欄*/
+    width: 33%; /* 因為有border，所以不能用50% */
+  }
+  @media (min-width: 768px){  /* >768px，變四欄*/
+    width: 25%; /* 因為有border，所以不能用50% */
+  }
+  @media (min-width: 992px){  /* >992px，變五欄 */
+    width: 20%;
+  }
+  @media (min-width: 1200px){  /* >1200px，變六欄 */
+    width: 16.6%;
+  }
+}

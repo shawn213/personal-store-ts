@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title #{__('title.home')}
+    script(src="/jquery.min.js")
+    script(src="/js/bootstrap.min.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/vue.js")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+    script(src="/js/common/common.min.js")
+  body
+    include navbar.pug
+    include overlay.pug
+    div(class="container-fluid", style="padding-top: 56px;")
+      script(src="/js/common/message.min.js")
+      block content
+  footer
+    include footer.pug

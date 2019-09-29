@@ -1,0 +1,22 @@
+extends common/layout
+
+block content
+  .app(v-cloak)
+    .row
+      div(class="col-4")
+        img(v-bind:src='product.link', class="img-fluid")
+      div(class="col-2")
+        h3 {{product.name}}
+        h2(style="color: red;font-weight:bold;") {{product.price | commaFormat}}
+        button(class="btn btn-success btn-lg btn-block") Buy
+        .form-group(v-for="item, index in product.types")
+          .form-check.form-check-inline(v-for="value,key,i in item.data")
+            input(class="form-check-input", v-bind:type="item.type", v-bind:name="`options-${index}`", v-bind:id="`inline-${i}`", :value="key")
+            label(class="form-check-label",  v-bind:for="`inline-${i}`") {{value}}
+    .row(v-for="(item,index) in product.images")
+      .col
+        img(v-bind:src='item.link', class="img-fluid")
+    .row
+      .col
+        .markdown(v-html="updateMd")
+  script(src="/js/product.min.js")

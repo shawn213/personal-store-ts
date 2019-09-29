@@ -1,0 +1,70 @@
+extends ../common/layout
+
+block content
+  link(rel="stylesheet", href="/cropper.min.css")
+  .app(v-cloak)
+    form
+      .form-group.row
+        label.col-sm-2.col-form-label 商品名稱
+        .col-sm-6
+          input#productName(type="text", class='form-control', v-model="product.name")
+      .form-group.row
+        label.col-sm-2.col-form-label 目錄預覽
+        .col-sm-2
+          .form-group
+            .custom-file
+              label.custom-file-label {{titleFileName}}
+              input.custom-file-input(type="file", ref="file", @change="changeImage", accept="image/*")
+          .form-group
+            .input-group
+              .input-group-prepend
+                span.input-group-text URL
+              input.form-control(type="text", placeholder="ex: https://www.xxx.com/abc.jpg", v-model="url")
+          .form-group
+            .card
+              .card-img-top.img-preview
+              .card-body
+                h5.card-title.hidden-text-single {{product.name}}
+                p.card-text {{range | dateRangeFormat}}
+                p.card-text.text-right(style="color: red;font-weight:bold;") {{product.price | commaFormat}}
+        .col-sm-4.form-group
+          img#img.img-fluid(v-bind:src="imagePreview", v-show="showPreview", @load="loadImage")
+      .form-group.row
+        label.col-sm-2.col-form-label 商品圖片
+        .col-sm-6
+          .form-inline(v-for="(item,index) in product.images", ref="upload{{index}}")
+            .input-group.col-sm-6
+              .custom-file
+                label.custom-file-label {{item.fileName}}
+                input.custom-file-input(type="file", accept="image/*", v-on:change="changeImageList(index, $event)", :disabled="item.isLoading")
+            .input-group.col-sm-6
+              input.form-control(type="text", placeholder="ex: https://www.xxx.com/abc.jpg", v-model="item.link", v-on:keyup="keyupUrlList(index)", :disabled="item.isLoading")
+              .input-group-append
+                button.btn.btn-info(type="button", @click="addRow", :disabled="item.isLoading") +
+                button.btn.btn-info(type="button", @click="removeRow(index)", :disabled="item.isLoading") -
+              .spinner-border.text-info(role="status", v-show="item.isLoading")
+                span(class="sr-only") Loading
+            .col-4
+              img.img-fluid(v-bind:src="item.src")
+      .form-group.row
+        label.col-sm-2.col-form-label 團購時間設定
+        .col-sm-6
+          date-picker(v-model="range", range, confirm, :lang="lang", type="datetime", :not-before="new Date()", format="YYYY-MM-DD HH:mm", :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }")
+      .form-group.row
+        label.col-sm-2.col-form-label 商品價格
+        .col-sm-6
+          input#price.form-control(type="number", v-model.number="product.price")
+      .from-group.row
+        label.col-sm-2.col-from-label 商品描述
+        .col-sm-3
+          textarea#content.form-control(v-model.trim="product.content", rows="10")
+        .col-sm-3
+          .markdown(v-html="updateMd")
+      .form-group.row
+        .col-sm-8
+          .row.justify-content-md-center
+            .col-md-auto(style="padding-top: 10px")
+              button.btn.btn-info(type="button", v-if="btn_c", @click="create") 新增
+              button.btn.btn-info(type="button", v-if="btn_u", @click="update") 更新
+              button.btn.btn-dark(type="submit") 取消
+  script(src="/js/management/product.min.js")

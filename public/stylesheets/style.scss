@@ -1,0 +1,83 @@
+@import 'common/text';
+@import 'common/col';
+
+body {
+  padding: 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+footer {
+  position: fixed;
+}
+
+.copyright {
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+}
+
+.product-card {
+  @include card;
+}
+
+.hidden-text-single {
+  @include text-hidden(1);
+}
+
+.overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 1031; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+.overlay-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+textarea{
+  border:0;
+  background-color:transparent;
+  scrollbar-arrow-color:yellow;
+  scrollbar-base-color:lightsalmon;
+  overflow: hidden;
+  resize: none;
+  color: #666464;
+  height: auto;
+}
+
+.markdown tr {
+  border-top: 1px solid #c6cbd1;
+  background: #fff;
+}
+
+.markdown th,
+.markdown td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown table tr:nth-child(2n) {
+  background: #f6f8fa;
+}
+
+.markdown pre {
+  border: 1px solid #ccc;
+}

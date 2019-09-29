@@ -1,0 +1,8 @@
+{
+  "watch": ["src", "public/javascripts", "public/stylesheets"],
+  "ext": "ts,scss,js",
+  "exec": "webpack && ts-node",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
