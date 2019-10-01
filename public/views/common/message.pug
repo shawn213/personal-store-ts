@@ -1,0 +1,5 @@
+.common-message(v-if="isShow", v-cloak)
+  .col
+    div(:class='style', role="alert")
+      div(v-for="message, index in messages") {{message}}
+script(src="/js/common/message.min.js")

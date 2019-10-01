@@ -1,19 +1,22 @@
 doctype html
 html
   head
-    title #{__('title.home')}
+    title #{__('__home')}
     script(src="/jquery.min.js")
     script(src="/js/bootstrap.min.js")
+    script(src="https://kit.fontawesome.com/541d30f311.js", crossorigin="anonymous")
     link(rel="stylesheet", href="/css/bootstrap.min.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="/vue.js")
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
     script(src="/js/common/common.min.js")
+    style.
+      [v-cloak] { display:none !important; }
   body
     include navbar.pug
     include overlay.pug
     div(class="container-fluid", style="padding-top: 56px;")
-      script(src="/js/common/message.min.js")
+      include message.pug
       block content
   footer
     include footer.pug

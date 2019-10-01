@@ -42,20 +42,8 @@ export const createProduct = async (req: Request, res: Response) => {
       deletehash: url.deletehash
     });
   });
-  let test = [
-    {
-      name: 'color',
-      type: 'radio',
-      data: { 1: 'red', 2: 'blue' }
-    },
-    {
-      name: 'type',
-      type: 'checkbox',
-      data: { 1: 'XL', 2: 'L', 3: 'M' }
-    }
-  ]
   let product = await Product.create({
-    name, price, startDate, endDate, link, deletehash, content, images: items, types: test
+    name, price, startDate, endDate, link, deletehash, content, images: items, types: []
   });
   res.json({ product });
 }
@@ -81,6 +69,8 @@ export const updateProduct = async (req: Request, res: Response) => {
   Product.findByPk(id).then(item => {
     item.update({
       name, price, startDate, endDate, link, deletehash, content, images
+    }).then(() => {
+      res.json({isOK: true});
     });
   });
 }

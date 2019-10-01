@@ -6,7 +6,7 @@ window.$loading = new Vue({
   },
   methods: {
     show(text){
-      this.text = text || 'Loading';
+      this.text = text || this.$t('__wait');
       this.isShow = true;
     },
     hide(){

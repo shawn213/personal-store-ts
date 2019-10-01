@@ -257,13 +257,13 @@ new Vue({
       });
     },
     async create() {
-      let loader = this.$loading.show({
-        loader: 'spinner'
-      });
+      $loading.show();
       let [startDate, endDate] = this.range;
       let { name, price, content, images } = this.product;
-      // content=content.replace(/\n/g,'<br/>');
-      let cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+      let cropBase64 = '';
+      if(this.cropper){
+        cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+      }
       axios.post('/product', {
         name,
         price,
@@ -275,28 +275,33 @@ new Vue({
       }).then(res => {
         if (res.status === 200) {
         }
-        loader.hide();
+        $loading.hide();
+        _message.success(this.$t('__message.success', {action: this.$t('__message.create')}));
       }).catch(e => {
-        loader.hide();
+        $loading.hide();
         console.log(e);
       });
     },
     async update() {
-      let loading = this.$loading.show();
+      $loading.show();
       let {product, range} = this;
       let [startDate, endDate] = range;
       product.startDate = startDate;
       product.endDate = endDate;
       let {id} = this.product;
-      let cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+      let cropBase64 = '';
+      if(this.cropper){
+        cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+      }
       axios.patch(`/product/${id}`, {
         product,
         cropBase64
       }).then(res => {
         console.log(res);
-        loading.hide();
+        $loading.hide();
+        _message.success(this.$t('__message.success'/*{action} 成功*/, {action: this.$t('__message.update'/*更新*/)}));
       }).catch(e => {
-
+        $loading.hide();
       });
     }
   }

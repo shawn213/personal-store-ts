@@ -1,12 +1,12 @@
 block navbar
   nav(class="navbar fixed-top navbar-expand-md navbar-dark bg-info")
-    a(class="navbar-brand" href="/") #{__('title.home')}
+    a(class="navbar-brand" href="/") #{__('__home')}
     button(type="button", class="navbar-toggler", data-toggle="collapse", data-target="#collapsibleNavbar")
       span(class="navbar-toggler-icon")
     div(class="collapse navbar-collapse", id="collapsibleNavbar")
       ul(class="navbar-nav")
         li(class="nav-item dropdown")
-          a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") #{__('menu.manager')}
+          a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") #{__('__management')}
           div(class="dropdown-menu", aria-labelledby="navbarDropdownMenuLink")
-            a(class="dropdown-item", href="/product/1") 產品
             a(class="dropdown-item", href="/product") 登錄商品
+    i(class="fas fa-cart-plus fa-2x", data-count="4")

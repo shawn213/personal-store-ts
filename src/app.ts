@@ -54,8 +54,8 @@ I18n.configure({
     locales: ['tw', 'en'],
     defaultLocale: 'tw',
     directory: __dirname + '/../config/language',
-    cookie: 'lang',
-    queryParameter: 'lang'
+    cookie: 'locale',
+    queryParameter: 'locale'
 });
 app.use(I18n.init);
 
