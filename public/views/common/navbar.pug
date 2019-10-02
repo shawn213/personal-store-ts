@@ -4,9 +4,11 @@ block navbar
     button(type="button", class="navbar-toggler", data-toggle="collapse", data-target="#collapsibleNavbar")
       span(class="navbar-toggler-icon")
     div(class="collapse navbar-collapse", id="collapsibleNavbar")
-      ul(class="navbar-nav")
+      ul(class="navbar-nav mr-auto")
         li(class="nav-item dropdown")
           a(class="nav-link dropdown-toggle", href="#", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") #{__('__management')}
           div(class="dropdown-menu", aria-labelledby="navbarDropdownMenuLink")
             a(class="dropdown-item", href="/product") 登錄商品
-    i(class="fas fa-cart-plus fa-2x", data-count="4")
+      form.form-inline
+        a(href="/login")
+          i(class="far fa-user fa-2x", style="color: white")

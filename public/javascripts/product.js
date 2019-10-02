@@ -5,6 +5,7 @@ import emoji from 'node-emoji';
 import hljs from 'highlight.js';
 
 import 'highlight.js/styles/vs.css';
+import { O_CREAT } from 'constants';
 
 new Vue({
   el: '.app',
@@ -52,5 +53,11 @@ new Vue({
         return number;
       }
     },
+  },
+  methods: {
+    buyItem: function(){
+      _cart.addItem(this.product);
+      _message.info(this.$t('__message.success', {action: this.$t('__message.addItem', {name: this.product.name})}));
+    }
   }
 });

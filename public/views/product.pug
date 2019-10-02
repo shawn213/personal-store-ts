@@ -8,7 +8,7 @@ block content
       div(class="col-2")
         h3 {{product.name}}
         h2(style="color: red;font-weight:bold;") {{product.price | commaFormat}}
-        button(class="btn btn-success btn-lg btn-block") Buy
+        button(class="btn btn-success btn-lg btn-block", @click="buyItem") Buy
         .form-group(v-for="item, index in product.types")
           .form-check.form-check-inline(v-for="value,key,i in item.data")
             input(class="form-check-input", v-bind:type="item.type", v-bind:name="`options-${index}`", v-bind:id="`inline-${i}`", :value="key")

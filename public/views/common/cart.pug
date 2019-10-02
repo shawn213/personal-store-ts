@@ -1,0 +1,9 @@
+.cart(v-show="show", v-cloak)
+  .cart-icon(@click="isShowList")
+    i(class="fas fa-shopping-cart fa-2x", v-bind:data-count="count")
+  .cart-detail(v-show="isShow")
+    div(v-for="item,index in items", @click="removeItem(index)")
+      img(:src="item.link", class="img-fluid")
+      div {{item.name}}
+    button(type="button", @click="checkout", class="btn btn-info", v-show="isCheckout") checkout
+script(src="/js/common/cart.min.js")

@@ -1,0 +1,16 @@
+extends common/layout
+
+block content
+  form.app(v-cloak)
+    .form-group.form-row
+      label.col-1.col-form-label {{$t('__html.username')}}
+      .col-5
+        input(type="text", class="form-control", v-model="username")
+    .form-group.form-row
+      label.col-1.col-form-label {{$t('__html.password')}}
+      .col-5
+        input(type="password", class="form-control", v-model="password")
+    .form-group
+      .col
+        button(type="button", class="btn btn-info", @click="login") {{$t('__html.btn.login')}}
+  script(src="/js/login.min.js")

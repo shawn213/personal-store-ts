@@ -99,3 +99,32 @@ textarea{
   min-width: 2em;
   font: bold .4em sans-serif;
 }
+
+.cart-icon {
+  position: fixed;  /*固定在網頁上不隨卷軸移動，若要隨卷軸移動用absolute*/
+  top: 70px;  /*設置垂直位置*/
+  right: 0px;  /*設置水平位置，依所放的內容多寡需要自行手動調整*/
+  padding: 10px;
+  z-index: 50;
+  color: #00B7FF;
+}
+
+.cart-detail {
+  position: fixed;  /*固定在網頁上不隨卷軸移動，若要隨卷軸移動用absolute*/
+  top: 20%;  /*設置垂直位置*/
+  right: -10px;  /*設置水平位置，依所放的內容多寡需要自行手動調整*/
+  background: #ffffff;  /*背景顏色*/
+  padding: 10px 10px;
+  border-radius: 10px;  /*圓角*/
+  border:1px solid #69c;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  width: 10%;
+  max-height: 60%;
+  overflow: auto;
+  -ms-overflow-style: none;
+}
+
+.cart-detail::-webkit-scrollbar {
+  display: none;
+}
