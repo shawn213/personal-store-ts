@@ -3,8 +3,13 @@ import axios from 'axios';
 new Vue({
   el: '.app',
   data: {
+    userId: '',
     username: '',
-    password: ''
+    password: '',
+    confirm: '',
+    email: '',
+    cellPhone: '',
+    isLogin: true
   },
   created() {
     _cart.showCart();
@@ -24,10 +29,7 @@ new Vue({
         _message.danger(error);
         return;
       }
-      axios.post('/login', {
-        username,
-        password
-      }).then(res => {
+      axios.post('/login', { username, password }).then(res => {
         if (res.status === 200) {
           window.sessionStorage.user = res.data.user;
         }
@@ -36,6 +38,16 @@ new Vue({
         _message.danger('login error');
         $loading.hide();
       });
+    },
+    register() {
+      $loading.show();
+      let { userId, username, password, confirm, email, cellPhone } = this;
+      axios.post('/login/register', {
+        userId, username, password, cellPhone, confirm, email
+      }).then(res => {
+        window.sessionStorage.user = res.data.user;
+        $loading.hide();
+      })
     }
   }
 })

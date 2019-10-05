@@ -15,3 +15,21 @@
     width: 16.6%;
   }
 }
+@mixin form-w {
+  width: 100%;
+  @media (min-width: 576px) {
+    width: 80%;
+  }
+  @media (min-width: 768px) {
+    width: 70%;
+  }
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+  @media (min-width: 1200px) {
+    width: 30%;
+  }
+  @media (min-width: 1500px) {
+    width: 20%;
+  }
+}

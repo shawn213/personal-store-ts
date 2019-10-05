@@ -26,7 +26,7 @@ new Vue({
       endDate: '',
       content: '',
       images: [
-        {id: '', link: '', deletehash: '', src: '', fileName: '', isLoading: false}
+        { id: '', link: '', deletehash: '', src: '', fileName: '', isLoading: false }
       ]
     },
     titleFileName: '',
@@ -47,30 +47,31 @@ new Vue({
     btn_c: false,
     btn_u: false
   },
-  created(){
-    if(location.pathname.search('/m/') > -1){
+  created() {
+    _cart.showCart();
+    if (location.pathname.search('/m/') > -1) {
       let loading = this.$loading.show();
       let id = location.pathname.split('/').pop();
       axios.get(`/product/${id}`)
-      .then(res => {
-        let {product} = res.data;
-        _.assignIn(this.product, product);
-        this.range = [product.startDate, product.endDate];
-        this.url = product.link;
-        let {images} = this.product;
-        _.each(images, item => {
-          item.src = item.link;
+        .then(res => {
+          let { product } = res.data;
+          _.assignIn(this.product, product);
+          this.range = [product.startDate, product.endDate];
+          this.url = product.link;
+          let { images } = this.product;
+          _.each(images, item => {
+            item.src = item.link;
+          });
+          loading.hide();
         });
-        loading.hide();
-      });
       this.btn_u = true;
-    }else{
+    } else {
       this.btn_c = true;
     }
   },
-  mounted(){
+  mounted() {
     marked.setOptions({
-      highlight: function(code) {
+      highlight: function (code) {
         return hljs.highlightAuto(code).value;
       }
     });
@@ -89,7 +90,7 @@ new Vue({
     }
   },
   computed: {
-    updateMd: function() {
+    updateMd: function () {
       let replacer = (match) => emoji.emojify(match);
       let markdown = this.product.content;
       markdown = markdown.replace(/(:.*:)/g, replacer);
@@ -103,8 +104,8 @@ new Vue({
         return number;
       }
     },
-    dateRangeFormat: function(value){
-      if(value){
+    dateRangeFormat: function (value) {
+      if (value.length > 0) {
         let df = 'YYYY-MM-DD';
         let [startDate, endDate] = value;
         return moment(startDate).format(df) + ' ~ ' + moment(endDate).format(df);
@@ -128,7 +129,7 @@ new Vue({
         this.imagePreview = '';
         this.titleFileName = '';
         this.cropper.destroy();
-        if(this.product.deletehash){
+        if (this.product.deletehash) {
           this.deleteImage(this.product.deletehash);
           this.product.deletehash = '';
           this.product.link = '';
@@ -157,7 +158,7 @@ new Vue({
       this.cropper = cropper;
     },
     keyupUrlList(index) {
-      let {images} = this.product;
+      let { images } = this.product;
       let url = images[index].url;
       if (/\.(jpe?g|png|gif)$/i.test(url)) {
         images[index].src = url;
@@ -167,7 +168,7 @@ new Vue({
     },
     changeImageList(index, e) {
       let files = e.target.files;
-      let {images} = this.product;
+      let { images } = this.product;
       if (files && files[0]) {
         let file = files[0];
         let reader = new FileReader();
@@ -194,14 +195,14 @@ new Vue({
         let image = images[index];
         image.fileName = '';
         image.src = '';
-        if(image.deletehash){
+        if (image.deletehash) {
           this.deleteImage(image.deletehash);
           image.deletehash = '';
           image.link = '';
         }
       }
     },
-    blurImageList(index, e){
+    blurImageList(index, e) {
       let url = this.product.images[index].url;
       if (/\.(jpe?g|png|gif)$/i.test(url)) {
       }
@@ -217,7 +218,7 @@ new Vue({
       });
     },
     removeRow: function (index) {
-      let {images} = this.product;
+      let { images } = this.product;
       if (images[index].deletehash) {
         let result = this.deleteImage(images[index].deletehash);
         result.then(res => {
@@ -227,6 +228,8 @@ new Vue({
         if (images.length == 0) {
           this.addRow();
         }
+      } else {
+        images.splice(index, 1);
       }
     },
     uploadImage(base64) {
@@ -261,7 +264,7 @@ new Vue({
       let [startDate, endDate] = this.range;
       let { name, price, content, images } = this.product;
       let cropBase64 = '';
-      if(this.cropper){
+      if (this.cropper) {
         cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
       }
       axios.post('/product', {
@@ -276,7 +279,7 @@ new Vue({
         if (res.status === 200) {
         }
         $loading.hide();
-        _message.success(this.$t('__message.success', {action: this.$t('__message.create')}));
+        _message.success(this.$t('__message.success', { action: this.$t('__message.create') }));
       }).catch(e => {
         $loading.hide();
         console.log(e);
@@ -284,13 +287,13 @@ new Vue({
     },
     async update() {
       $loading.show();
-      let {product, range} = this;
+      let { product, range } = this;
       let [startDate, endDate] = range;
       product.startDate = startDate;
       product.endDate = endDate;
-      let {id} = this.product;
+      let { id } = this.product;
       let cropBase64 = '';
-      if(this.cropper){
+      if (this.cropper) {
         cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
       }
       axios.patch(`/product/${id}`, {
@@ -299,10 +302,13 @@ new Vue({
       }).then(res => {
         console.log(res);
         $loading.hide();
-        _message.success(this.$t('__message.success'/*{action} 成功*/, {action: this.$t('__message.update'/*更新*/)}));
+        _message.success(this.$t('__message.success'/*{action} 成功*/, { action: this.$t('__message.update'/*更新*/) }));
       }).catch(e => {
         $loading.hide();
       });
+    },
+    goHome() {
+      location = '/';
     }
   }
 });

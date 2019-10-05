@@ -1,54 +1,16 @@
 extends common/layout
 
 block content
-  if products.length
-    .row
-      .col.mr-auto
-      .col-auto
-        .btn-group.btn-group-toggle(data-toggle="buttons")
-          label(class="btn btn-outline-info active") info
-            input(type="radio", name="options", value="info", checked)
-          label(class="btn btn-outline-info") update
-            input(type="radio", name="options", value="update")
-          label(class="btn btn-outline-info") delete
-            input(type="radio", name="options", value="delete")
-  .row
-    each item, i in products
-      .product-card
-        .card
-          img.card-img-top(src=`${item.link}`, alt="..")
-          .card-body
-            h5.card-title.hidden-text-single= item.name
-            p.card-text #{moment(item.startDate).format('YYYY-MM-DD') + ' ~ ' + moment(item.endDate).format('YYYY-MM-DD')}
-            p.card-text.text-right.currency= item.price
-            input(type="hidden", value=`${item.id}`)
-  script.
-    $(function(){
-      $('.product-card').click(function(){
-        var radio = $('input[name*=options]:checked').val();
-        var id = $(this).find(':hidden').val();
-        var self = $(this);
-        switch(radio){
-          case 'info':
-            location = `/product/${id}`;
-            break;
-          case 'update':
-            location = `/product/m/${id}`;
-            break;
-          case 'delete':
-            deleteCard(id, self);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-    function deleteCard(id, self){
-      $.ajax({
-        url: `/product/${id}`,
-        method: 'DELETE',
-        success: function(res){
-          self.remove();
-        }
-      });
-    }
+  .row.app(v-cloak)
+    .product-card(v-for="item,index in products")
+      .card
+        img.card-img-top(:src='item.link', alt="..", @click="viewDetail(index)")
+        .card-body(@click="viewDetail(index)")
+          h5.card-title.hidden-text-single {{item.name}}
+          p.card-text {{item.startDate | timeFormat(item.endDate)}}
+          p.card-text.text-right(style="color:red;") {{item.price | commaFormat}}
+        .card-footer(v-show="maintain")
+          .col.text-center
+            button.btn.btn-success(type="button", @click="updateCard(index)") {{$t('__html.btn.update')}}
+            button.btn.btn-danger(type="button", @click="deleteCard(index)") {{$t('__html.btn.delete')}}
+  script(src="/js/index.min.js")

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import * as product from '../controllers/productController';
 import { login } from '../controllers/loginController';
+import { queryAll } from '../controllers/mainController';
 
 const router = Router();
 
 /* GET home page. */
-router.get('/', product.queryAll);
+router.get('/', queryAll);
 
 router.route('/login')
   .get(login)

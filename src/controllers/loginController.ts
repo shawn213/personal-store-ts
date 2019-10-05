@@ -19,3 +19,9 @@ export const login = async (req: Request, res: Response) => {
     res.render('login');
   }
 }
+
+export const register = (req: Request, res: Response) => {
+  if (req.headers.accept.search('json') > -1) {
+
+  }
+}

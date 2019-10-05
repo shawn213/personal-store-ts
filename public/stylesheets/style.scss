@@ -128,3 +128,8 @@ textarea{
 .cart-detail::-webkit-scrollbar {
   display: none;
 }
+
+.login {
+  @include form-w;
+  border: 1px solid rgba(0,0,0,.125);
+}

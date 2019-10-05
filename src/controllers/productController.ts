@@ -3,6 +3,7 @@ import { Product } from '../db/models/Product';
 import { Op } from 'sequelize';
 import axios from 'axios';
 import _ from 'lodash';
+import { isAjax } from '../services/checkTypes';
 
 const env = process.env.NODE_ENV || 'production';
 const config = require('../../config')[env];
@@ -10,7 +11,7 @@ const config = require('../../config')[env];
 let options = { headers: { Authorization: config.clientId } };
 
 export const query = async (req: Request, res: Response) => {
-  if (req.headers.accept.search('json') > -1) {
+  if (isAjax(req)) {
     let productId = req.params.id;
     let product = await Product.findByPk(productId);
     res.json({ product });
@@ -70,7 +71,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     item.update({
       name, price, startDate, endDate, link, deletehash, content, images
     }).then(() => {
-      res.json({isOK: true});
+      res.json({ isOK: true });
     });
   });
 }

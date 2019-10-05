@@ -148,4 +148,23 @@ textarea {
 .cart-detail::-webkit-scrollbar {
   display: none; }
 
+.login {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.125); }
+  @media (min-width: 576px) {
+    .login {
+      width: 80%; } }
+  @media (min-width: 768px) {
+    .login {
+      width: 70%; } }
+  @media (min-width: 992px) {
+    .login {
+      width: 50%; } }
+  @media (min-width: 1200px) {
+    .login {
+      width: 30%; } }
+  @media (min-width: 1500px) {
+    .login {
+      width: 20%; } }
+
 /*# sourceMappingURL=style.css.map */

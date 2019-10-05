@@ -1,6 +1,6 @@
-import {Table, Column, Model, DataType} from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table({tableName: 'product'})
+@Table({ tableName: 'product' })
 export class Product extends Model<Product> {
   @Column({
     defaultValue: DataType.UUIDV4,
@@ -27,14 +27,16 @@ export class Product extends Model<Product> {
 
   @Column
   endDate!: Date;
-  
+
   @Column
   link!: string;
-  
+
   @Column
   deletehash!: string;
 
-  @Column
+  @Column({
+    type: DataType.STRING(3000)
+  })
   content!: String;
 
   @Column({

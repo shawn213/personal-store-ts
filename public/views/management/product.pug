@@ -66,5 +66,5 @@ block content
             .col-md-auto(style="padding-top: 10px")
               button.btn.btn-info(type="button", v-if="btn_c", @click="create") {{$t('__html.btn.create')}}
               button.btn.btn-info(type="button", v-if="btn_u", @click="update") {{$t('__html.btn.update')}}
-              button.btn.btn-dark(type="submit") {{$t('__html.btn.cancel')}}
+              button.btn.btn-dark(type="button", @click="goHome") {{$t('__html.btn.cancel')}}
   script(src="/js/management/product.min.js")
