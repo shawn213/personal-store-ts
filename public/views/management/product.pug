@@ -4,16 +4,17 @@ block content
   link(rel="stylesheet", href="/cropper.min.css")
   .app(v-cloak)
     form
-      .form-group.row
+      .form-group.row(:class="{error: validation.hasError('product.name')}")
         label.col-sm-2.col-form-label {{$t('__html.product.name')}}
         .col-sm-6
           input#productName(type="text", class='form-control', v-model="product.name")
+        .message.col {{ validation.firstError('product.name') }}
       .form-group.row
         label.col-sm-2.col-form-label {{$t('__html.product.preview')}}
         .col-sm-2
           .form-group
             .custom-file
-              label.custom-file-label {{titleFileName}}
+              label.custom-file-label.text-truncate {{titleFileName}}
               input.custom-file-input(type="file", ref="file", @change="changeImage", accept="image/*")
           .form-group
             .input-group
@@ -35,25 +36,28 @@ block content
           .form-inline(v-for="(item,index) in product.images", ref="upload{{index}}")
             .input-group.col-sm-6
               .custom-file
-                label.custom-file-label {{item.fileName}}
+                label.custom-file-label.text-truncate {{item.fileName}}
                 input.custom-file-input(type="file", accept="image/*", v-on:change="changeImageList(index, $event)", :disabled="item.isLoading")
-            .input-group.col-sm-6
+            .input-group.col-sm-5
               input.form-control(type="text", placeholder="ex: https://www.xxx.com/abc.jpg", v-model="item.link", v-on:keyup="keyupUrlList(index)", :disabled="item.isLoading")
               .input-group-append
                 button.btn.btn-info(type="button", @click="addRow", :disabled="item.isLoading") +
                 button.btn.btn-info(type="button", @click="removeRow(index)", :disabled="item.isLoading") -
+            .col-sm-1
               .spinner-border.text-info(role="status", v-show="item.isLoading")
                 span(class="sr-only") Loading
             .col-4
               img.img-fluid(v-bind:src="item.src")
-      .form-group.row
+      .form-group.row(:class="{error: validation.hasError('range')}")
         label.col-sm-2.col-form-label {{$t('__html.product.range')}}
         .col-sm-6
           date-picker(v-model="range", range, confirm, :lang="lang", type="datetime", :not-before="new Date()", format="YYYY-MM-DD HH:mm", :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }")
-      .form-group.row
+        .message.col {{ validation.firstError('range') }}
+      .form-group.row(:class="{error: validation.hasError('product.name')}")
         label.col-sm-2.col-form-label {{$t('__html.product.price')}}
         .col-sm-6
           input#price.form-control(type="number", v-model.number="product.price")
+        .message.col {{ validation.firstError('product.price') }}
       .from-group.row
         label.col-sm-2.col-from-label {{$t('__html.product.content')}}
         .col-sm-3

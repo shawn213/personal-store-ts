@@ -12,6 +12,9 @@ import { config } from 'dotenv';
 
 import indexRouter from './routes/index';
 import productRouter from './routes/product';
+import loginRouter from './routes/login';
+import registerRouter from './routes/register';
+import userRouter from './routes/user';
 
 var app = express();
 config();
@@ -68,6 +71,9 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

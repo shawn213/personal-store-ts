@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { login } from '../controllers/loginController';
 import { queryAll } from '../controllers/mainController';
 
 const router = Router();
@@ -7,8 +6,12 @@ const router = Router();
 /* GET home page. */
 router.get('/', queryAll);
 
-router.route('/login')
-  .get(login)
-  .post(login);
+router.post('/logout', (req, res) => {
+  req.session.destroy(e => {
+    if (!e) {
+      res.render('index');
+    }
+  });
+});
 
 export default router;

@@ -1,53 +1,36 @@
-import axios from 'axios';
+// import SimpleVueValidator from 'simple-vue-validator';
+// const Validator = SimpleVueValidator.Validator;
 
 new Vue({
   el: '.app',
   data: {
     userId: '',
-    username: '',
-    password: '',
-    confirm: '',
-    email: '',
-    cellPhone: '',
-    isLogin: true
+    password: ''
   },
-  created() {
-    _cart.showCart();
+  validators: {
+    userId: function (value) {
+      return this.$Validator.value(value).required();
+    },
+    password: function (value) {
+      return this.$Validator.value(value).required();
+    }
   },
   methods: {
-    login() {
-      $loading.show();
-      let { username, password } = this;
-      let error = [];
-      if (!username) {
-        error.push('username is null');
+    async login() {
+      let success = await this.$validate();
+      if (success) {
+        $loading.show();
+        let { userId, password } = this;
+        axios.post('/login', { userId, password }).then(res => {
+          window.sessionStorage.user = JSON.stringify(res.data.user);
+          $loading.hide();
+          $navbar.refresh();
+          location = '/';
+        }).catch(e => {
+          _message.danger('login error');
+          $loading.hide();
+        });
       }
-      if (!password) {
-        error.push('password is null');
-      }
-      if (error.length > 0) {
-        _message.danger(error);
-        return;
-      }
-      axios.post('/login', { username, password }).then(res => {
-        if (res.status === 200) {
-          window.sessionStorage.user = res.data.user;
-        }
-        $loading.hide();
-      }).catch(e => {
-        _message.danger('login error');
-        $loading.hide();
-      });
-    },
-    register() {
-      $loading.show();
-      let { userId, username, password, confirm, email, cellPhone } = this;
-      axios.post('/login/register', {
-        userId, username, password, cellPhone, confirm, email
-      }).then(res => {
-        window.sessionStorage.user = res.data.user;
-        $loading.hide();
-      })
     }
   }
 })

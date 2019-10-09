@@ -112,6 +112,17 @@ new Vue({
       }
     }
   },
+  validators: {
+    'product.name': function (value) {
+      return this.$Validator.value(value).required();
+    },
+    range: function (value) {
+      return this.$Validator.value(value).required();
+    },
+    'product.price': function (value) {
+      return this.$Validator.value(value).required('零元商品!!!不用上架了我全都要');
+    }
+  },
   methods: {
     changeImage(e) {
       let file = this.$refs.file.files[0];
@@ -260,52 +271,58 @@ new Vue({
       });
     },
     async create() {
-      $loading.show();
-      let [startDate, endDate] = this.range;
-      let { name, price, content, images } = this.product;
-      let cropBase64 = '';
-      if (this.cropper) {
-        cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
-      }
-      axios.post('/product', {
-        name,
-        price,
-        startDate,
-        endDate,
-        content,
-        cropBase64,
-        images
-      }).then(res => {
-        if (res.status === 200) {
+      let success = await this.$validate();
+      if (success) {
+        $loading.show();
+        let [startDate, endDate] = this.range;
+        let { name, price, content, images } = this.product;
+        let cropBase64 = '';
+        if (this.cropper) {
+          cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
         }
-        $loading.hide();
-        _message.success(this.$t('__message.success', { action: this.$t('__message.create') }));
-      }).catch(e => {
-        $loading.hide();
-        console.log(e);
-      });
+        axios.post('/product', {
+          name,
+          price,
+          startDate,
+          endDate,
+          content,
+          cropBase64,
+          images
+        }).then(res => {
+          if (res.status === 200) {
+          }
+          $loading.hide();
+          _message.success(this.$t('__message.success', { action: this.$t('__message.create') }));
+        }).catch(e => {
+          $loading.hide();
+          console.log(e);
+        });
+      }
     },
     async update() {
-      $loading.show();
-      let { product, range } = this;
-      let [startDate, endDate] = range;
-      product.startDate = startDate;
-      product.endDate = endDate;
-      let { id } = this.product;
-      let cropBase64 = '';
-      if (this.cropper) {
-        cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+      let success = await this.$validate();
+      if (success) {
+        $loading.show();
+        let { product, range } = this;
+        let [startDate, endDate] = range;
+        product.startDate = startDate;
+        product.endDate = endDate;
+        let { id } = this.product;
+        let cropBase64 = '';
+        if (this.cropper) {
+          cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+        }
+        axios.patch(`/product/${id}`, {
+          product,
+          cropBase64
+        }).then(res => {
+          console.log(res);
+          $loading.hide();
+          _message.success(this.$t('__message.success'/*{action} 成功*/, { action: this.$t('__message.update'/*更新*/) }));
+        }).catch(e => {
+          $loading.hide();
+        });
       }
-      axios.patch(`/product/${id}`, {
-        product,
-        cropBase64
-      }).then(res => {
-        console.log(res);
-        $loading.hide();
-        _message.success(this.$t('__message.success'/*{action} 成功*/, { action: this.$t('__message.update'/*更新*/) }));
-      }).catch(e => {
-        $loading.hide();
-      });
     },
     goHome() {
       location = '/';

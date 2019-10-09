@@ -5,12 +5,13 @@ new Vue({
   el: '.app',
   data: {
     products: [],
-    maintain: true
+    maintain: false
   },
   created() {
     Axios.get('/').then(res => {
       this.products = res.data.products;
     });
+    this.maintain = $navbar.auth > 0;
   },
   filters: {
     timeFormat: function (startDate, endDate) {

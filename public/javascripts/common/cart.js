@@ -1,5 +1,3 @@
-import { functionExpression } from "babel-types";
-
 window._cart = new Vue({
   el: '.cart',
   data: {

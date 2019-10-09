@@ -1,65 +1,26 @@
 extends ../common/layout
 
 block content
-  link(rel="stylesheet", href="/cropper.min.css")
-  .app
-    form
-      .form-group.row
-        label.col-sm-2.col-form-label 商品名稱
-        .col-sm-10
-          input#productName(type="text", class='form-control', name="name", v-model="name")
-      .form-group.row
-        label.col-sm-2.col-form-label 目錄預覽
-        .col-sm-2
-          .form-group
-            .custom-file
-              label.custom-file-label {{titleFileName}}
-              input.custom-file-input(type="file", @change="changeImage")
-          .form-group
-            .input-group
-              .input-group-prepend
-                span.input-group-text URL
-              input.form-control(type="text", placeholder="ex: https://www.xxx.com/abc.jpg", v-model="url", v-on:keyup="keyupUrl")
-          .form-group
-            .card
-              .card-img-top.img-preview
-              .card-body
-                h5.card-title.hidden-text-single {{name}}
-                p.card-text.text-right {{price}}
-        .col-sm-4.form-group
-          img#img.img-fluid(v-bind:src="image", @load="loadImage")
-      .form-group.row
-        label.col-sm-2.col-form-label 商品圖片
-        .col-sm-6
-          .form-group(v-for="(item,index) in urls")
-            .form-inline
-              .custom-file.col-5
-                label.custom-file-label {{item.fileName}}
-                input.custom-file-input(type="file", v-on:change="changeImageList(index, $event)")
-              .col-5
-                input.form-control(type="text", placeholder="ex: https://www.xxx.com/abc.jpg", v-model="item.url", v-on:keyup="keyupUrlList(index)")
-              .col-1
-                button.btn.btn-info(type="button", @click="addRow") +
-              .col-1
-                button.btn.btn-info(type="button", @click="removeRow(index)") -
-            div.col
-              img.img-fluid(v-bind:src="item.src")
-      .form-group.row
-        label.col-sm-2.col-form-label 團購時間設定
-        .col-sm-6
-          date-picker(v-model="range", range, confirm, :lang="lang", :not-before="new Date()")
-      .form-group.row
-        label.col-sm-2.col-form-label 商品價格
-        .col-sm-6
-          input#price.form-control(type="text", name="price", v-model="price")
-      .from-group.row
-        label.col-sm-2.col-from-label 商品描述
-        .col-sm-6
-          textarea#content.form-control(name="content", rows="10")
-      .form-group.row
-        .col-sm-8
-          .row.justify-content-md-center
-            .col-md-auto(style="padding-top: 10px")
-              button.btn.btn-info(type="button", @click="create") 新增
-              button.btn.btn-dark(type="submit") 取消
+  .row.app.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8.text-right
+      button.btn.btn-info(type="button") add row
+    .col-sm-12.col-lg-8
+      table.table.table-sm.table-striped
+        thead.table-dark
+          tr
+            th(scope="col") #
+            th(scope="col") username
+            th(scope="col") email
+            th(scope="col") cellPhone
+            th(scope="col", colspan=2, v-show="isOwner") feature
+        tbody
+          tr(v-for="user, index in users")
+            th(scope="row") {{index+1}}
+            td.text-truncate {{user.username}}
+            td.text-truncate {{user.email}}
+            td.text-truncate {{user.cellPhone}}
+            td(v-show="isOwner")
+              button.btn.btn-success.btn-block(type="button", @click="update") 更新資料
+            td(v-show="isOwner")
+              button.btn.btn-danger.btn-block(type="button", @click="reset") 重設密碼
   script(src="/js/management/user.min.js")

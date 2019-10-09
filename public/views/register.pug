@@ -1,0 +1,39 @@
+extends common/layout
+
+block content
+  .row.app.justify-content-md-center(v-cloak)
+    form.login(@keyup.enter="register")
+      .form-group(:class="{error: validation.hasError('userId')}")
+        label.col.col-form-label {{$t('__html.user.userId')}}
+        .col
+          input(type="text", class="form-control", v-model="userId", v-focus)
+        .message.col {{ validation.firstError('userId') }}
+      .form-group(:class="{error: validation.hasError('username')}")
+        label.col.col-form-label {{$t('__html.user.username')}}
+        .col
+          input(type="text", class="form-control", v-model="username")
+        .message.col {{ validation.firstError('username') }}
+      .form-group(:class="{error: validation.hasError('password')}")
+        label.col.col-form-label {{$t('__html.user.password')}}
+        .col
+          input(type="password", class="form-control", v-model="password")
+        .message.col {{ validation.firstError('password') }}
+      .form-group(:class="{error: validation.hasError('confirm')}")
+        label.col.col-form-label {{$t('__html.user.confirm')}}
+        .col
+          input(type="password", class="form-control", v-model="confirm")
+        .message.col {{ validation.firstError('confirm') }}
+      .form-group(:class="{error: validation.hasError('cellPhone')}")
+        label.col.col-form-label {{$t('__html.user.cellPhone')}}
+        .col
+          input(type="password", class="form-control", v-model="cellPhone")
+        .message.col {{ validation.firstError('cellPhone') }}
+      .form-group(:class="{error: validation.hasError('email')}")
+        label.col.col-form-label {{$t('__html.user.email')}}
+        .col
+          input(type="password", class="form-control", v-model="email")
+        .message.col {{ validation.firstError('email') }}
+      .form-group
+        .col
+          button(type="button", class="btn btn-info btn-block", @click="register") {{$t('__html.btn.register')}}
+  script(src="/js/register.min.js")

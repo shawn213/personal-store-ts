@@ -167,4 +167,10 @@ textarea {
     .login {
       width: 20%; } }
 
+.error .message {
+  color: red; }
+
+.error input {
+  border-color: red; }
+
 /*# sourceMappingURL=style.css.map */
