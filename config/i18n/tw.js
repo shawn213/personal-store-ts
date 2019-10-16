@@ -9,6 +9,7 @@ export default {
     addItem: '{name}加入購物車'
   },
   __html: {
+    feature: '功能',
     user: {
       userId: '用戶帳號',
       username: '用戶姓名',
@@ -35,7 +36,8 @@ export default {
       cancel: '取消',
       checkout: '結帳',
       preview: '預覽',
-      register: '註冊'
+      register: '註冊',
+      resetPW: '重設密碼'
     }
   },
   __validator: {

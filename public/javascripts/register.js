@@ -28,10 +28,10 @@ new Vue({
       return Validator.value(confirm).required().match(password);
     },
     email: function (value) {
-      return Validator.value(value).email();
+      return Validator.value(value).required().email();
     },
     cellPhone: function (value) {
-      return Validator.value(value).maxLength(10);
+      return Validator.value(value).required().maxLength(10);
     }
   },
   methods: {
@@ -45,6 +45,7 @@ new Vue({
         }).then(res => {
           window.sessionStorage.user = res.data.user;
           $loading.hide();
+          location = '/';
         });
       }
     }

@@ -1,9 +1,11 @@
 .cart(v-show="show", v-cloak)
   .cart-icon(@click="isShowList")
-    i(class="fas fa-shopping-cart fa-2x", v-bind:data-count="count")
+    i(class="fas fa-shopping-cart fa-2x", style="cursor:pointer", v-bind:data-count="count")
   .cart-detail(v-show="isShow")
     div(v-for="item,index in items", @click="removeItem(index)")
       img(:src="item.link", class="img-fluid")
-      div {{item.name}}
-    button(type="button", @click="checkout", class="btn btn-info", v-show="isCheckout") checkout
+      div {{item.name}} {{item.type}} x {{item.amount}}
+    .row
+      .col.text-right
+        a.text-reset(v-show="isCheckout", href="/checkout") {{$t('__html.btn.checkout'/*結帳*/)}}
 script(src="/js/common/cart.min.js")

@@ -1,0 +1,28 @@
+extends common/layout
+
+block content
+  .row.app.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8
+      table.table.table-sm.table-striped.table-bordered
+        thead.table-primary
+          tr
+            th(scope="col") #
+            th.text-center(scope="col") name
+            th.text-center(scope="col") image
+            th.text-center(scope="col") type
+            th.text-center(scope="col") amount
+            th.text-center(scope="col") price
+        tbody
+          tr(v-for="product, index in products")
+            th.align-middle(scope="row") {{index+1}}
+            td.text-truncate.align-middle.text-center {{product.name}}
+            td
+              img(:src="product.link", style="maxHeight: 150px")
+            td.text-truncate.align-middle.text-center {{product.type}}
+            td.text-truncate.align-middle {{product.amount}}
+            td.text-truncate.align-middle.text-right {{product.price}}
+          tr
+            td(colspan=4)
+            td {{sumAmount}}
+            td.text-right {{sumPrice}}
+  script(src="/js/checkout.min.js")

@@ -4,8 +4,8 @@ block content
   .row.app(v-cloak)
     .product-card(v-for="item,index in products")
       .card
-        img.card-img-top(:src='item.link', alt="..", @click="viewDetail(index)")
-        .card-body(@click="viewDetail(index)")
+        img.card-img-top(:src='item.link', alt="..", @click="viewDetail(index)", style="cursor:pointer")
+        .card-body(@click="viewDetail(index)", style="cursor:pointer")
           h5.card-title.hidden-text-single {{item.name}}
           p.card-text {{item.startDate | timeFormat(item.endDate)}}
           p.card-text.text-right(style="color:red;") {{item.price | commaFormat}}

@@ -5,7 +5,6 @@ import emoji from 'node-emoji';
 import hljs from 'highlight.js';
 
 import 'highlight.js/styles/vs.css';
-import { O_CREAT } from 'constants';
 
 new Vue({
   el: '.app',
@@ -13,14 +12,16 @@ new Vue({
     product: {
       id: '',
       name: '',
-      price: '',
+      price: 0,
       types: [],
       link: '',
       startDate: '',
       endDate: '',
       images: [],
       content: ''
-    }
+    },
+    type: '',
+    amount: 1
   },
   created() {
     $loading.show();
@@ -31,15 +32,15 @@ new Vue({
     });
     $loading.hide();
   },
-  mounted(){
+  mounted() {
     marked.setOptions({
-      highlight: function(code) {
+      highlight: function (code) {
         return hljs.highlightAuto(code).value;
       }
     });
   },
   computed: {
-    updateMd: function() {
+    updateMd: function () {
       let replacer = (match) => emoji.emojify(match);
       let markdown = this.product.content;
       markdown = markdown.replace(/(:.*:)/g, replacer);
@@ -54,10 +55,30 @@ new Vue({
       }
     },
   },
+  validators: {
+    type: function (value) {
+      if (this.product.types.length > 0) {
+        return this.$Validator.value(value).required().minLength(1);
+      } else {
+        return true;
+      }
+    },
+    amount: function (value) {
+      return this.$Validator.value(value).required().greaterThan(0);
+    }
+  },
   methods: {
-    buyItem: function(){
-      _cart.addItem(this.product);
-      _message.info(this.$t('__message.success', {action: this.$t('__message.addItem', {name: this.product.name})}));
+    buyItem: async function () {
+      let success = await this.$validate();
+      if (success) {
+        let { id, name, price, link } = this.product;
+        let { type, amount } = this;
+        price = parseInt(price);
+        _cart.addItem({
+          id, name, price, link, type, amount
+        });
+        _message.info(this.$t('__message.success', { action: this.$t('__message.addItem', { name: this.product.name }) }));
+      }
     }
   }
 });

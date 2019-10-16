@@ -20,6 +20,7 @@ new Vue({
     product: {
       name: '',
       price: '',
+      types: [],
       link: '',
       deletehash: '',
       startDate: '',
@@ -31,6 +32,7 @@ new Vue({
     },
     titleFileName: '',
     url: '',
+    types: [],
     range: [],
     lang: {
       days: ['日', '一', '二', '三', '四', '五', '六'],
@@ -62,6 +64,11 @@ new Vue({
           _.each(images, item => {
             item.src = item.link;
           });
+          let { types } = this.product;
+          _.each(types, type => {
+            let { value, text } = type;
+            this.types += `${value},${text}\n`;
+          });
           loading.hide();
         });
       this.btn_u = true;
@@ -86,6 +93,26 @@ new Vue({
           this.imagePreview = '';
           this.cropper.destroy();
         }
+      }
+    },
+    types(value) {
+      if (value) {
+        let items = value.split('\n');
+        let types = [];
+        _.forEach(items, (item, i) => {
+          let [value, text] = item.split(',');
+          if (!text) {
+            text = value;
+            value = i;
+          }
+          types.push({
+            value,
+            text
+          });
+        })
+        this.product.types = types;
+      } else {
+        this.product.types = [];
       }
     }
   },
@@ -275,7 +302,7 @@ new Vue({
       if (success) {
         $loading.show();
         let [startDate, endDate] = this.range;
-        let { name, price, content, images } = this.product;
+        let { name, price, content, images, types } = this.product;
         let cropBase64 = '';
         if (this.cropper) {
           cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
@@ -283,6 +310,7 @@ new Vue({
         axios.post('/product', {
           name,
           price,
+          types,
           startDate,
           endDate,
           content,

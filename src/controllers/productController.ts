@@ -33,7 +33,7 @@ export const queryAll = async (req: Request, res: Response) => {
 }
 
 export const createProduct = async (req: Request, res: Response) => {
-  let { name, price, cropBase64, startDate, endDate, content, images } = req.body;
+  let { name, price, cropBase64, startDate, endDate, content, images, types } = req.body;
   let { data } = await axios.post('https://api.imgur.com/3/image', { image: cropBase64 }, options);
   let { link, deletehash } = data.data;
   let items = [];
@@ -43,8 +43,9 @@ export const createProduct = async (req: Request, res: Response) => {
       deletehash: url.deletehash
     });
   });
+  types = types || [];
   let product = await Product.create({
-    name, price, startDate, endDate, link, deletehash, content, images: items, types: []
+    name, price, startDate, endDate, link, deletehash, content, images: items, types: types
   });
   res.json({ product });
 }
@@ -52,7 +53,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   let id = req.params.id;
   let { product, cropBase64 } = req.body;
-  let { name, price, startDate, endDate, link, deletehash, content } = product;
+  let { name, price, startDate, endDate, link, deletehash, content, types } = product;
   let urls = product.images;
   let images = [];
   _.each(urls, item => {
@@ -67,9 +68,10 @@ export const updateProduct = async (req: Request, res: Response) => {
     link = data.link;
     deletehash = data.deletehash;
   }
+  types = types || [];
   Product.findByPk(id).then(item => {
     item.update({
-      name, price, startDate, endDate, link, deletehash, content, images
+      name, price, startDate, endDate, link, deletehash, content, images, types
     }).then(() => {
       res.json({ isOK: true });
     });

@@ -31,7 +31,7 @@ window._cart = new Vue({
       this.isShow = this.items.length > 0;
     },
     checkout: function () {
-
+      location = '/checkout';
     },
     isShowList: function () {
       this.isShow = !this.isShow && this.items.length > 0;

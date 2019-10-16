@@ -9,39 +9,39 @@ window._message = new Vue({
     delay: 2000
   },
   methods: {
-    info(){
+    info() {
       this.showMessage(arguments, 'info');
     },
-    primary(){
+    primary() {
       this.showMessage(arguments, 'primary');
     },
-    success(){
+    success() {
       this.showMessage(arguments, 'success');
     },
-    danger(){
+    danger() {
       this.showMessage(arguments, 'danger');
     },
-    warning(){
+    warning() {
       this.showMessage(arguments, 'warning');
     },
-    putMessage(messages){
-      for(let idx = 0;idx<messages.length;idx++){
+    putMessage(messages) {
+      for (let idx = 0; idx < messages.length; idx++) {
         let p = messages[idx];
-        if(typeof p == 'string'){
+        if (typeof p == 'string') {
           this.messages.push(p);
-        }else if(Array.isArray(p)){
+        } else if (Array.isArray(p)) {
           this.putMessage(p);
         }
       }
     },
-    showMessage(messages, style){
+    showMessage(messages, style) {
       this.putMessage(messages);
-      this.style = `alert alert-${style}`;
+      this.style = `alert alert-fixed alert-${style}`;
       this.isShow = true;
       setTimeout(() => {
         this.isShow = false;
         this.messages = [];
-        this.style = 'alert alert-info';
+        this.style = 'alert alert-fixed alert-info';
       }, this.delay || 2000);
     }
   }

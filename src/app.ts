@@ -15,6 +15,7 @@ import productRouter from './routes/product';
 import loginRouter from './routes/login';
 import registerRouter from './routes/register';
 import userRouter from './routes/user';
+import checkoutRouter from './routes/checkout';
 
 var app = express();
 config();
@@ -74,6 +75,7 @@ app.use('/product', productRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
+app.use('/checkout', checkoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

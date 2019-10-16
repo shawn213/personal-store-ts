@@ -138,6 +138,16 @@ textarea{
   color: red;
 }
 
-.error input{
+.error input,
+.error select {
   border-color: red;
+}
+
+.alert-fixed {
+  position:fixed; 
+  top: 56px; 
+  left: 0px; 
+  width: 100%;
+  z-index:9999; 
+  border-radius:0px;
 }

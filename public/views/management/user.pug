@@ -5,14 +5,14 @@ block content
     .col-sm-12.col-lg-8.text-right
       button.btn.btn-info(type="button") add row
     .col-sm-12.col-lg-8
-      table.table.table-sm.table-striped
+      table.table.table-sm.table-striped.table-responsive
         thead.table-dark
           tr
             th(scope="col") #
-            th(scope="col") username
-            th(scope="col") email
-            th(scope="col") cellPhone
-            th(scope="col", colspan=2, v-show="isOwner") feature
+            th(scope="col") {{$t('__html.user.username')}}
+            th(scope="col") {{$t('__html.user.email')}}
+            th(scope="col") {{$t('__html.user.cellPhone')}}
+            th(scope="col", colspan=2, v-show="isOwner") {{$t('__html.feature')}}
         tbody
           tr(v-for="user, index in users")
             th(scope="row") {{index+1}}
@@ -22,5 +22,5 @@ block content
             td(v-show="isOwner")
               button.btn.btn-success.btn-block(type="button", @click="update") 更新資料
             td(v-show="isOwner")
-              button.btn.btn-danger.btn-block(type="button", @click="reset") 重設密碼
+              button.btn.btn-danger.btn-block(type="button", @click="reset") {{$t('__html.btn.resetPW')}}
   script(src="/js/management/user.min.js")

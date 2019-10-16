@@ -31,6 +31,13 @@ block content
         .col-sm-4.form-group
           img#img.img-fluid(v-bind:src="imagePreview", v-show="showPreview", @load="loadImage")
       .form-group.row
+        label.col-sm-2.col-form-label types
+        .col-sm-3
+          textarea.form-control(rows="5", v-model.trim="types")
+        .col-sm-3
+          select.form-control
+            option(v-for="item,index in product.types", :value="item.value") {{item.text}}
+      .form-group.row
         label.col-sm-2.col-form-label {{$t('__html.product.images')}}
         .col-sm-6
           .form-inline(v-for="(item,index) in product.images", ref="upload{{index}}")

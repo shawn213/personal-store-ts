@@ -26,12 +26,12 @@ block content
       .form-group(:class="{error: validation.hasError('cellPhone')}")
         label.col.col-form-label {{$t('__html.user.cellPhone')}}
         .col
-          input(type="password", class="form-control", v-model="cellPhone")
+          input(type="text", class="form-control", v-model="cellPhone")
         .message.col {{ validation.firstError('cellPhone') }}
       .form-group(:class="{error: validation.hasError('email')}")
         label.col.col-form-label {{$t('__html.user.email')}}
         .col
-          input(type="password", class="form-control", v-model="email")
+          input(type="text", class="form-control", v-model="email")
         .message.col {{ validation.firstError('email') }}
       .form-group
         .col
