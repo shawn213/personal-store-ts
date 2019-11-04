@@ -65,10 +65,12 @@ new Vue({
             item.src = item.link;
           });
           let { types } = this.product;
+          let lines = [];
           _.each(types, type => {
             let { value, text } = type;
-            this.types += `${value},${text}\n`;
+            lines.push(`${value},${text}`);
           });
+          this.types = _.join(lines, '\n');
           loading.hide();
         });
       this.btn_u = true;

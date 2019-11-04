@@ -1,6 +1,3 @@
-// import SimpleVueValidator from 'simple-vue-validator';
-// const Validator = SimpleVueValidator.Validator;
-
 new Vue({
   el: '.app',
   data: {

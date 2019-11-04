@@ -7,7 +7,8 @@ window.$navbar = new Vue({
     auth: 0,
     items: [
       { name: 'suyeon', link: 'https://i.imgur.com/Bqqw622.jpg' }
-    ]
+    ],
+    userInfo: {}
   },
   created() {
     this.refresh();
@@ -30,6 +31,7 @@ window.$navbar = new Vue({
         let user = JSON.parse(userStr);
         this.auth = user.authority;
         this.isLogin = true;
+        this.userInfo = user;
       }
     }
   }

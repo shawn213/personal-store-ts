@@ -1,0 +1,35 @@
+extends common/layout
+
+block content
+  .row.app.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8
+      table.table.table-responsive-sm.table-striped.table-bordered
+        thead.table-info
+          tr
+            th(scope="col") #
+            th.text-center(scope="col") name
+            th.text-center(scope="col") image
+            th.text-center(scope="col") type
+            th.text-center(scope="col") amount
+            th.text-center(scope="col") price
+        tbody
+          tr(v-for="product, index in products")
+            th.align-middle(scope="row") {{index+1}}
+            td.text-truncate.align-middle.text-center {{product.name}}
+            td
+              img(:src="product.link", style="maxHeight: 150px")
+            td.text-truncate.align-middle.text-center {{product.type}}
+            td.text-truncate.align-middle {{product.amount}}
+            td.text-truncate.align-middle.text-right {{product.price}}
+          tr
+            td(colspan=4)
+            td {{sumAmount}}
+            td.text-right.text-primary {{sumPrice | commaFormat}}
+    .col-sm-12.col-lg-8.form-group.row
+      .col-3
+        button.btn.btn-block.btn-success(type="button",@click="getStoreInfo") 選擇取件門市
+      .col-9.form-control {{store}}
+      div#storeInfo(style="display:none") #{JSON.stringify(data)}
+    .col-sm-12.col-lg-8.text-right
+      button.btn.btn-block.btn-info(@click="confirmOrder") 確認訂單
+  script(src="/js/checkout.min.js")

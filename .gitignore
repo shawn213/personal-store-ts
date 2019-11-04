@@ -65,3 +65,6 @@ typings/
 
 # build folder
 build/
+
+# webpack distFolder
+public/js/

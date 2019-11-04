@@ -78,7 +78,7 @@ textarea {
   background-color: transparent;
   scrollbar-arrow-color: yellow;
   scrollbar-base-color: lightsalmon;
-  overflow: hidden;
+  overflow: auto;
   resize: none;
   color: #666464;
   height: auto; }
@@ -176,10 +176,15 @@ textarea {
 
 .alert-fixed {
   position: fixed;
-  top: 56px;
+  top: 60px;
   left: 0px;
   width: 100%;
   z-index: 9999;
   border-radius: 0px; }
 
-/*# sourceMappingURL=style.css.map */
+.text-amount {
+  color: red;
+  font-weight: bold; }
+
+.action-click {
+  cursor: pointer; }

@@ -45,6 +45,17 @@ Vue.directive('focus', {
 
 Vue.prototype.$Validator = Validator;
 
+Vue.mixin({
+  filters: {
+    commaFormat: function (value) {
+      if (value) {
+        let number = _changeCurrency(value);
+        return number;
+      }
+    },
+  }
+});
+
 const init = Vue.prototype._init
 Vue.prototype._init = function (options) {
   init.call(this, {

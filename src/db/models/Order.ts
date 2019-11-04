@@ -26,6 +26,16 @@ export class Order extends Model<Order> {
   })
   amount!: number;
 
+  @Column({
+    type: DataType.STRING(10)
+  })
+  status!: string;
+
+  @Column({
+    type: DataType.STRING(50)
+  })
+  shipmentOrderNo!: string;
+
   @AllowNull(false)
   @Column({
     type: DataType.JSON
@@ -34,7 +44,7 @@ export class Order extends Model<Order> {
 
   @AllowNull(false)
   @Column({
-    type: DataType.JSON
+    type: DataType.JSONB
   })
   products!: any;
 }

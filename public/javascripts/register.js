@@ -1,6 +1,3 @@
-import SimpleVueValidation from 'simple-vue-validator';
-const Validator = SimpleVueValidation.Validator;
-
 new Vue({
   el: '.app',
   data: {
@@ -16,22 +13,22 @@ new Vue({
   },
   validators: {
     userId: function (value) {
-      return Validator.value(value).required();
+      return this.$Validator.value(value).required();
     },
     username: function (value) {
-      return Validator.value(value).required();
+      return this.$Validator.value(value).required();
     },
     password: function (value) {
-      return Validator.value(value).required();
+      return this.$Validator.value(value).required();
     },
     'confirm, password': function (confirm, password) {
-      return Validator.value(confirm).required().match(password);
+      return this.$Validator.value(confirm).required().match(password);
     },
     email: function (value) {
-      return Validator.value(value).required().email();
+      return this.$Validator.value(value).required().email();
     },
     cellPhone: function (value) {
-      return Validator.value(value).required().maxLength(10);
+      return this.$Validator.value(value).required().maxLength(10);
     }
   },
   methods: {
@@ -43,7 +40,7 @@ new Vue({
         axios.post('/register', {
           userId, username, password, cellPhone, confirm, email
         }).then(res => {
-          window.sessionStorage.user = res.data.user;
+          window.sessionStorage.user = JSON.stringify(res.data.user);
           $loading.hide();
           location = '/';
         });

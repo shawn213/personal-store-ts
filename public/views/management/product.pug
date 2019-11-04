@@ -27,7 +27,7 @@ block content
               .card-body
                 h5.card-title.hidden-text-single {{product.name}}
                 p.card-text {{range | dateRangeFormat}}
-                p.card-text.text-right(style="color: red;font-weight:bold;") {{product.price | commaFormat}}
+                p.card-text.text-right.text-amount {{product.price | commaFormat}}
         .col-sm-4.form-group
           img#img.img-fluid(v-bind:src="imagePreview", v-show="showPreview", @load="loadImage")
       .form-group.row

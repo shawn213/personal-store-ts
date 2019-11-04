@@ -4,7 +4,7 @@ block content
   .row.app.justify-content-md-center(v-cloak)
     .col-sm-12.col-lg-8
       table.table.table-sm.table-striped.table-bordered
-        thead.table-primary
+        thead.table-info
           tr
             th(scope="col") #
             th.text-center(scope="col") name
@@ -12,6 +12,7 @@ block content
             th.text-center(scope="col") type
             th.text-center(scope="col") amount
             th.text-center(scope="col") price
+            th.text-center(scope="col") feature
         tbody
           tr(v-for="product, index in products")
             th.align-middle(scope="row") {{index+1}}
@@ -19,10 +20,31 @@ block content
             td
               img(:src="product.link", style="maxHeight: 150px")
             td.text-truncate.align-middle.text-center {{product.type}}
-            td.text-truncate.align-middle {{product.amount}}
-            td.text-truncate.align-middle.text-right {{product.price}}
+            td.text-truncate.align-middle
+              input.form-control.text-right(type="text", v-model.number="product.amount")
+            td.text-truncate.align-middle.text-right {{product.subTotal}}
+            td.align-middle
+              button.btn.btn-danger(@click="removeRow(index)") remove
           tr
             td(colspan=4)
             td {{sumAmount}}
-            td.text-right {{sumPrice}}
+            td.text-right.text-primary {{sumTotal}}
+    .col-sm-12.col-lg-8.form-group.row(:class="{error: validation.hasError('storeInfo')}")
+      .col-3
+        button.btn.btn-block.btn-success(type="button",@click="getStoreInfo") 選擇取件門市
+      form.col-3
+        .form-check.form-check-inline
+          input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="UNIMART")
+          label.form-check-label 7-11
+        .form-check.form-check-inline
+          input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="FAMI")
+          label.form-check-label 全家
+        .form-check.form-check-inline
+          input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="HILIFE")
+          label.form-check-label 萊爾富
+      .col-6.form-control {{store}}
+      div#storeInfo(style="display:none") #{JSON.stringify(data)}
+      .message.col-12 {{ validation.firstError('storeInfo') }}
+    .col-sm-12.col-lg-8.text-right
+      button.btn.btn-info(@click="confirmOrder") 確認訂單
   script(src="/js/checkout.min.js")

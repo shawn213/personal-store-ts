@@ -1,15 +1,17 @@
 export default {
   __wait: '處理中...',
   __message: {
-    success: '{action} 成功',
-    fail: '{action} 失敗',
+    success: '{action}成功',
+    fail: '{action}失敗',
     create: '新增',
     update: '更新',
     delete: '刪除',
-    addItem: '{name}加入購物車'
+    addItem: '{name}加入購物車',
+    order: '訂單確認'
   },
   __html: {
     feature: '功能',
+    store: '門市店號：{id}, 門市名稱：{name}, 門市地址：{addr}',
     user: {
       userId: '用戶帳號',
       username: '用戶姓名',

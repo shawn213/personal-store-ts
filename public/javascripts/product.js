@@ -29,6 +29,7 @@ new Vue({
     Axios.get(`/product/${productId}`).then(res => {
       let { product } = res.data;
       this.product = product;
+      this.type = this.product.types.length ? this.product.types[0].text : '';
     });
     $loading.hide();
   },
@@ -47,22 +48,7 @@ new Vue({
       return marked(markdown);
     }
   },
-  filters: {
-    commaFormat: function (value) {
-      if (value) {
-        let number = parseInt(value).toLocaleString('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 });
-        return number;
-      }
-    },
-  },
   validators: {
-    type: function (value) {
-      if (this.product.types.length > 0) {
-        return this.$Validator.value(value).required().minLength(1);
-      } else {
-        return true;
-      }
-    },
     amount: function (value) {
       return this.$Validator.value(value).required().greaterThan(0);
     }
