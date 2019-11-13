@@ -1,0 +1,34 @@
+extends ../common/layout
+
+block content
+  .row.app.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8
+      table.table.table-responsive-sm.table-striped.table-bordered
+        thead.table-info
+          tr
+            th.text-center(scope="col") #
+            th.text-center(scope="col") orderTime
+            th.text-center(scope="col") userId
+            th.text-center(scope="col") count
+            th.text-center(scope="col") amount
+            th.text-center(scope="col") status
+        tbody
+          template(v-for="order, index in orders")
+            tr
+              td.text-truncate.align-middle.text-center
+                i.fa.action-click(:class="{ 'fa-plus': !opened.includes(order.id), 'fa-minus': opened.includes(order.id) }", aria-hidden="true", @click="toggle(order.id)")
+              td.text-truncate.align-middle.text-center {{order.orderTime}}
+              td.text-truncate.align-middle.text-center {{order.userId}}
+              td.text-truncate.align-middle.text-center {{order.count}}
+              td.text-truncate.align-middle {{order.amount}}
+              td.text-truncate.align-middle.text-right {{order.status}}
+            tr(v-if="opened.includes(order.id)", v-for="product, i in order.products")
+              td.text-truncate.align-middle.text-center {{i + 1}}
+              td(colspan=5)
+                p 
+                  img(:src="product.link", style="maxHeight: 90px")
+                p name: {{product.name}}
+                p type: {{product.type}}
+                p count: {{product.count}}
+                p price: {{product.price}}
+  script(src="/js/management/order.min.js")

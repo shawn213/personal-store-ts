@@ -6,45 +6,44 @@ block content
       table.table.table-sm.table-striped.table-bordered
         thead.table-info
           tr
-            th(scope="col") #
-            th.text-center(scope="col") name
-            th.text-center(scope="col") image
-            th.text-center(scope="col") type
-            th.text-center(scope="col") amount
-            th.text-center(scope="col") price
-            th.text-center(scope="col") feature
+            th.text-center(scope="col") #
+            th.text-center(scope="col") {{$t('__html.checkout.name'/*商品名稱*/)}}
+            th.text-center(scope="col") {{$t('__html.checkout.image')}}
+            th.text-center(scope="col") {{$t('__html.checkout.type')}}
+            th.text-center(scope="col") {{$t('__html.checkout.count')}}
+            th.text-center(scope="col") {{$t('__html.checkout.amount')}}
         tbody
           tr(v-for="product, index in products")
-            th.align-middle(scope="row") {{index+1}}
+            th.align-middle.text-center(scope="row")
+              i.fa.fa-times.fa-2x.action-click(aria-hidden="true", @click="removeRow(index)")
             td.text-truncate.align-middle.text-center {{product.name}}
             td
               img(:src="product.link", style="maxHeight: 150px")
             td.text-truncate.align-middle.text-center {{product.type}}
             td.text-truncate.align-middle
-              input.form-control.text-right(type="text", v-model.number="product.amount")
+              input.form-control.text-right(type="text", v-model.number="product.count")
             td.text-truncate.align-middle.text-right {{product.subTotal}}
-            td.align-middle
-              button.btn.btn-danger(@click="removeRow(index)") remove
           tr
             td(colspan=4)
-            td {{sumAmount}}
+            td.text-right {{sumCount}}
             td.text-right.text-primary {{sumTotal}}
     .col-sm-12.col-lg-8.form-group.row(:class="{error: validation.hasError('storeInfo')}")
       .col-3
-        button.btn.btn-block.btn-success(type="button",@click="getStoreInfo") 選擇取件門市
+        button.btn.btn-block.btn-success(type="button",@click="getStoreInfo") {{$t('__html.btn.selectStore')}}
       form.col-3
         .form-check.form-check-inline
           input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="UNIMART")
-          label.form-check-label 7-11
+          label.form-check-label {{$t('__html.checkout.seven')}}
         .form-check.form-check-inline
           input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="FAMI")
-          label.form-check-label 全家
+          label.form-check-label {{$t('__html.checkout.family')}}
         .form-check.form-check-inline
           input.form-check-input(type="radio", name="subType", v-model="attrs.LogisticsSubType", value="HILIFE")
-          label.form-check-label 萊爾富
+          label.form-check-label {{$t('__html.checkout.hilife')}}
       .col-6.form-control {{store}}
       div#storeInfo(style="display:none") #{JSON.stringify(data)}
+      div#storeUrl(style="display:none") #{storeUrl}
       .message.col-12 {{ validation.firstError('storeInfo') }}
     .col-sm-12.col-lg-8.text-right
-      button.btn.btn-info(@click="confirmOrder") 確認訂單
+      button.btn.btn-info(@click="confirmOrder") {{$t('__html.btn.confirmOrder')}}
   script(src="/js/checkout.min.js")

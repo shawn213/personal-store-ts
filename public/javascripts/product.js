@@ -21,7 +21,7 @@ new Vue({
       content: ''
     },
     type: '',
-    amount: 1
+    count: 1
   },
   created() {
     $loading.show();
@@ -49,7 +49,7 @@ new Vue({
     }
   },
   validators: {
-    amount: function (value) {
+    count: function (value) {
       return this.$Validator.value(value).required().greaterThan(0);
     }
   },
@@ -58,10 +58,10 @@ new Vue({
       let success = await this.$validate();
       if (success) {
         let { id, name, price, link } = this.product;
-        let { type, amount } = this;
+        let { type, count } = this;
         price = parseInt(price);
         _cart.addItem({
-          id, name, price, link, type, amount
+          id, name, price, link, type, count
         });
         _message.info(this.$t('__message.success', { action: this.$t('__message.addItem', { name: this.product.name }) }));
       }

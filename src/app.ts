@@ -16,6 +16,7 @@ import loginRouter from './routes/login';
 import registerRouter from './routes/register';
 import userRouter from './routes/user';
 import checkoutRouter from './routes/checkout';
+import orderRouter from './routes/order';
 
 var app = express();
 config();
@@ -76,6 +77,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
 app.use('/checkout', checkoutRouter);
+app.use('/order', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -29,6 +29,7 @@ new Vue({
       location = '/';
     }
     let storeInfoStr = document.querySelector('#storeInfo').innerHTML;
+    console.log(storeInfoStr);
     if (storeInfoStr) {
       this.storeInfo = JSON.parse(storeInfoStr);
     }
@@ -45,18 +46,23 @@ new Vue({
     _cart.showCart();
     this.$watch("products", function (after, before) {
       after.filter(function (p, idx) {
-        vm.products[idx].subTotal = p.amount * p.price;
+        vm.products[idx].subTotal = p.count * p.price;
         return true;
       });
       vm.sumTotal = _.sumBy(this.products, 'subTotal');
     }, { deep: true, immediate: true });
+    let storeUrl = document.querySelector('#storeUrl').innerHTML;
+    console.log(storeUrl);
+    this.action = storeUrl;
+    this.attrs.ServerReplyURL = storeUrl;
   },
   computed: {
-    sumAmount: function () {
-      return _.sumBy(this.products, 'amount');
+    sumCount: function () {
+      return _.sumBy(this.products, 'count');
     },
     store: function () {
-      if (this.storeInfo.length > 0) {
+      console.log(this.storeInfo);
+      if (!_.isEmpty(this.storeInfo)) {
         let { storeId, storeName, storeAddr } = this.storeInfo;
         return this.$t('__html.store', { id: storeId, name: storeName, addr: storeAddr });
       }
@@ -93,7 +99,8 @@ new Vue({
         let user = $navbar.userInfo;
         axios.put('/checkout', {
           userId: user.userId,
-          amount: this.sumPrice,
+          count: this.sumCount,
+          amount: this.sumTotal,
           address: this.storeInfo,
           products: this.products
         }).then(() => {

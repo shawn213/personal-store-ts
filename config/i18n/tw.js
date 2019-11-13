@@ -39,7 +39,20 @@ export default {
       checkout: '結帳',
       preview: '預覽',
       register: '註冊',
-      resetPW: '重設密碼'
+      resetPW: '重設密碼',
+      selectStore: '選擇取件門市',
+      confirmOrder: '確認訂單'
+    },
+    checkout: {
+      name: '商品名稱',
+      image: '商品圖片',
+      count: '數量',
+      amount: '金額',
+      feature: '功能',
+      type: '樣式',
+      seven: '7-11',
+      family: '全家',
+      hilife: '萊爾富'
     }
   },
   __validator: {
@@ -69,7 +82,8 @@ export default {
   __menu: {
     management: {
       product: '登入商品',
-      user: '管理使用者'
+      user: '管理使用者',
+      order: '管理訂單'
     },
     user: {
       login: '登入/註冊',

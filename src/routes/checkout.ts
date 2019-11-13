@@ -5,11 +5,14 @@ const router = Router();
 
 router.route('/')
   .get((req, res) => {
-    res.render('checkout');
+    let storeUrl = '';
+    if (process.env.NODE_ENV === 'development') {
+      storeUrl = process.env.STORE_MAP;
+    }
+    res.render('checkout', { storeUrl });
   })
   .post((req, res) => {
     let { MerchantID, MerchantTradeNo, LogisticsSubType, CVSStoreID, CVSStoreName, CVSAddress, CVSTelephone, ExtraData } = req.body;
-    console.log(req.body);
     let data = {
       id: MerchantID,
       tradeNo: MerchantTradeNo,
@@ -26,10 +29,10 @@ router.route('/')
     res.render('checkout', { data });
   })
   .put((req, res) => {
-    let { userId, amount, products, address } = req.body;
+    let { userId, amount, products, address, count } = req.body;
     let orderTime = new Date();
     Order.create({
-      userId, amount, products, address, orderTime
+      userId, count, amount, products, address, orderTime
     }).then(order => {
       console.log(order);
       res.json({ isOK: true });

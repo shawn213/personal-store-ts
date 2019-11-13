@@ -12,7 +12,7 @@ block content
         .form-group.form-inline(:class="{error: validation.hasError('amount') | validation.hasError('type')}")
           select.form-control.col(v-model="type", v-if="product.types.length > 0")
             option(v-for="(item,index) in product.types", v-bind:value="item.text") {{item.text}}
-          input.form-control.col-2.text-right(type="text", v-model.number="amount")
+          input.form-control.col-2.text-right(type="text", v-model.number="count")
           .message.col-12 {{ validation.firstError('type') }} {{ validation.firstError('amount') }}
         .form-group
           button(class="btn btn-success btn-lg btn-block", @click="buyItem") 放入購物車

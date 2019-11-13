@@ -24,6 +24,12 @@ export class Order extends Model<Order> {
   @Column({
     type: DataType.DECIMAL
   })
+  count!: number;
+
+  @AllowNull(false)
+  @Column({
+    type: DataType.DECIMAL
+  })
   amount!: number;
 
   @Column({

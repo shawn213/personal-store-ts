@@ -23,7 +23,7 @@ window.$navbar = new Vue({
       window.sessionStorage.removeItem('user');
       this.auth = 0;
       this.isLogin = false;
-      location.reload();
+      location = '/';
     },
     refresh() {
       let userStr = window.sessionStorage.user;
