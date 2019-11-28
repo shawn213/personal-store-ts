@@ -18,13 +18,13 @@ new Vue({
       if (success) {
         $loading.show();
         let { userId, password } = this;
-        axios.post('/login', { userId, password }).then(res => {
+        axios.post('/rest/login', { userId, password }).then(res => {
           window.sessionStorage.user = JSON.stringify(res.data.user);
           $loading.hide();
           $navbar.refresh();
           location = '/';
-        }).catch(e => {
-          _message.danger('login error');
+        }).catch(error => {
+          _message.danger(this.$t('__message.error.password'));
           $loading.hide();
         });
       }

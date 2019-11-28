@@ -52,7 +52,6 @@ new Vue({
       vm.sumTotal = _.sumBy(this.products, 'subTotal');
     }, { deep: true, immediate: true });
     let storeUrl = document.querySelector('#storeUrl').innerHTML;
-    console.log(storeUrl);
     this.action = storeUrl;
     this.attrs.ServerReplyURL = storeUrl;
   },
@@ -97,7 +96,7 @@ new Vue({
       let success = await this.$validate();
       if (success) {
         let user = $navbar.userInfo;
-        axios.put('/checkout', {
+        axios.post('/rest/checkout', {
           userId: user.userId,
           count: this.sumCount,
           amount: this.sumTotal,

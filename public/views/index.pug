@@ -8,7 +8,11 @@ block content
         .card-body(@click="viewDetail(index)", style="cursor:pointer")
           h5.card-title.hidden-text-single {{item.name}}
           p.card-text {{item.startDate | timeFormat(item.endDate)}}
-          p.card-text.text-right.text-amount {{item.price | commaFormat}}
+          .form-row
+            .col-6
+              p.card-text.text-right.text-price(v-if="item.price!=item.onSale") {{item.price | commaFormat}}
+            .col-6
+              p.card-text.text-right.text-onSale {{item.onSale | commaFormat}} 
         .card-footer(v-show="maintain")
           .col.text-center
             button.btn.btn-success(type="button", @click="updateCard(index)") {{$t('__html.btn.update')}}

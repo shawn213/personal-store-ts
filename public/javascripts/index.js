@@ -7,7 +7,7 @@ new Vue({
     maintain: false
   },
   created() {
-    axios.get('/').then(res => {
+    axios.get('/rest/main').then(res => {
       this.products = res.data.products;
     });
     this.maintain = $navbar.auth > 0;
@@ -25,13 +25,12 @@ new Vue({
   methods: {
     updateCard: function (index) {
       let product = this.products[index];
-      location = `/product/m/${product.id}`;
+      location = `/m/product/${product.id}`;
     },
     deleteCard: async function (index) {
       $loading.show();
       let { id } = this.products[index];
-      let res = await axios.delete(`/product/${id}`);
-      console.log(res);
+      let res = await axios.delete(`/rest/product/i/${id}`);
       if (res.data.isOK) {
         this.products.splice(index, 1);
         _message.success('isOK');

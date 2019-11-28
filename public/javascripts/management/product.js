@@ -51,10 +51,10 @@ new Vue({
   },
   created() {
     _cart.showCart();
-    if (location.pathname.search('/m/') > -1) {
+    if (location.pathname.split('/').length > 3) {
       let loading = this.$loading.show();
       let id = location.pathname.split('/').pop();
-      axios.get(`/product/${id}`)
+      axios.get(`/rest/product/i/${id}`)
         .then(res => {
           let { product } = res.data;
           _.assignIn(this.product, product);
@@ -129,7 +129,7 @@ new Vue({
   filters: {
     commaFormat: function (value) {
       if (value) {
-        let number = parseInt(value).toLocaleString('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 });
+        let number = _changeCurrency(value);
         return number;
       }
     },
@@ -169,11 +169,12 @@ new Vue({
         this.imagePreview = '';
         this.titleFileName = '';
         this.cropper.destroy();
-        if (this.product.deletehash) {
-          this.deleteImage(this.product.deletehash);
-          this.product.deletehash = '';
-          this.product.link = '';
-        }
+      }
+      if (this.product.deletehash) {
+        this.deleteImage(this.product.deletehash);
+        this.product.deletehash = '';
+        this.product.link = '';
+        this.url = '';
       }
     },
     loadImage(e) {
@@ -215,6 +216,7 @@ new Vue({
         reader.addEventListener("load", function () {
           let base64 = reader.result;
           images[index].src = base64;
+          console.log(base64);
           let result = this.uploadImage(base64.split(',')[1]);
           result.then(function (res) {
             images[index].link = res.data.link;
@@ -304,14 +306,19 @@ new Vue({
       if (success) {
         $loading.show();
         let [startDate, endDate] = this.range;
-        let { name, price, content, images, types } = this.product;
+        let { name, price, onSale, content, images, types } = this.product;
         let cropBase64 = '';
         if (this.cropper) {
-          cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
+          let mimeType = 'image/jpeg';
+          if (this.titleFileName.indexOf('.gif') > -1) {
+            mimeType = 'image/gif';
+          }
+          cropBase64 = this.cropper.getCroppedCanvas().toDataURL(mimeType, 1.0).split(',')[1];
         }
-        axios.post('/product', {
+        axios.post('/rest/product', {
           name,
           price,
+          onSale,
           types,
           startDate,
           endDate,
@@ -342,7 +349,7 @@ new Vue({
         if (this.cropper) {
           cropBase64 = this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 1.0).split(',')[1];
         }
-        axios.patch(`/product/${id}`, {
+        axios.patch(`/rest/product/i/${id}`, {
           product,
           cropBase64
         }).then(res => {

@@ -1,11 +1,11 @@
 extends common/layout
 
 block content
-  .app(v-cloak)
-    .form-group.row
-      div(class="col-3")
+  .app.row.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8.form-group.row.justify-content-md-center
+      .col-sm-6.col-lg-3
         img(v-bind:src='product.link', class="img-fluid")
-      div(class="col-2")
+      .col-sm-6.col-lg-3
         .form-group
           h5 {{product.name}}
           h4(style="color: red;font-weight:bold;") {{product.price | commaFormat}}
@@ -16,10 +16,10 @@ block content
           .message.col-12 {{ validation.firstError('type') }} {{ validation.firstError('amount') }}
         .form-group
           button(class="btn btn-success btn-lg btn-block", @click="buyItem") 放入購物車
-    .form-group(v-for="(item,index) in product.images")
+    .col-sm-12.col-lg-8.form-group(v-for="(item,index) in product.images")
       .col
         img(v-bind:src='item.link', class="img-fluid")
-    .form-group
+    .col-sm-12.col-lg-8.form-group
       .col
         .markdown(v-html="updateMd")
   script(src="/js/product.min.js")

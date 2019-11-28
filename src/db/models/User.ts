@@ -44,6 +44,9 @@ export class User extends Model<User> {
   email!: string;
 
   @AllowNull(false)
-  @Column
+  @Column({
+    type: DataType.SMALLINT,
+    defaultValue: 0
+  })
   authority!: number;
 }

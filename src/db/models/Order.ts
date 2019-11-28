@@ -33,7 +33,8 @@ export class Order extends Model<Order> {
   amount!: number;
 
   @Column({
-    type: DataType.STRING(10)
+    type: DataType.STRING(10),
+    defaultValue: 'N'
   })
   status!: string;
 

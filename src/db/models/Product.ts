@@ -18,6 +18,11 @@ export class Product extends Model<Product> {
   price!: number;
 
   @Column({
+    type: DataType.DECIMAL
+  })
+  onSale!: number;
+
+  @Column({
     type: DataType.JSON
   })
   types!: any;

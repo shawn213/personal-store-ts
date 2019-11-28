@@ -19,7 +19,7 @@ new Vue({
       return this.$Validator.value(value).required();
     },
     password: function (value) {
-      return this.$Validator.value(value).required();
+      return this.$Validator.value(value).required().minLength(8).maxLength(20);
     },
     'confirm, password': function (confirm, password) {
       return this.$Validator.value(confirm).required().match(password);
@@ -28,7 +28,7 @@ new Vue({
       return this.$Validator.value(value).required().email();
     },
     cellPhone: function (value) {
-      return this.$Validator.value(value).required().maxLength(10);
+      return this.$Validator.value(value).required().minLength(10);
     }
   },
   methods: {
@@ -37,12 +37,16 @@ new Vue({
       if (success) {
         $loading.show();
         let { userId, username, password, confirm, email, cellPhone } = this;
-        axios.post('/register', {
+        axios.post('/rest/register', {
           userId, username, password, cellPhone, confirm, email
         }).then(res => {
-          window.sessionStorage.user = JSON.stringify(res.data.user);
           $loading.hide();
-          location = '/';
+          if (res.data.isOK) {
+            window.sessionStorage.user = JSON.stringify(res.data.user);
+            location = '/';
+          } else {
+            _message.danger(res.data.msg);
+          }
         });
       }
     }

@@ -27,7 +27,12 @@ block content
               .card-body
                 h5.card-title.hidden-text-single {{product.name}}
                 p.card-text {{range | dateRangeFormat}}
-                p.card-text.text-right.text-amount {{product.price | commaFormat}}
+                .form-row
+                  .col-6
+                    p.card-text.text-right
+                      small.text-price {{product.price | commaFormat}}
+                  .col-6
+                    p.card-text.text-right.text-onSale {{product.onSale | commaFormat}}
         .col-sm-4.form-group
           img#img.img-fluid(v-bind:src="imagePreview", v-show="showPreview", @load="loadImage")
       .form-group.row
@@ -60,11 +65,16 @@ block content
         .col-sm-6
           date-picker(v-model="range", range, confirm, :lang="lang", type="datetime", :not-before="new Date()", format="YYYY-MM-DD HH:mm", :time-picker-options="{ start: '00:00', step: '00:30', end: '23:30' }")
         .message.col {{ validation.firstError('range') }}
-      .form-group.row(:class="{error: validation.hasError('product.name')}")
+      .form-group.row(:class="{error: validation.hasError('product.price')}")
         label.col-sm-2.col-form-label {{$t('__html.product.price')}}
         .col-sm-6
           input#price.form-control(type="number", v-model.number="product.price")
         .message.col {{ validation.firstError('product.price') }}
+      .form-group.row(:class="{error: validation.hasError('product.onSale')}")
+        label.col-sm-2.col-form-label {{$t('__html.product.onSale')}}
+        .col-sm-6
+          input#price.form-control(type="number", v-model.number="product.onSale")
+        .message.col {{ validation.firstError('product.onSale') }}
       .from-group.row
         label.col-sm-2.col-from-label {{$t('__html.product.content')}}
         .col-sm-3

@@ -10,13 +10,7 @@ import session from 'express-session';
 import helmet from 'helmet';
 import { config } from 'dotenv';
 
-import indexRouter from './routes/index';
-import productRouter from './routes/product';
-import loginRouter from './routes/login';
-import registerRouter from './routes/register';
-import userRouter from './routes/user';
-import checkoutRouter from './routes/checkout';
-import orderRouter from './routes/order';
+import routers from './routes';
 
 var app = express();
 config();
@@ -55,6 +49,7 @@ app.use(express.static(path.join(__dirname, '../node_modules', 'cropperjs', 'dis
 app.use(express.static(path.join(__dirname, '../node_modules', 'vue', 'dist')));
 app.use(express.static(path.join(__dirname, '../node_modules', 'highlight.js')));
 app.use(express.static(path.join(__dirname, '../node_modules', 'axios', 'dist')));
+app.use(express.static(path.join(__dirname, '../node_modules', 'moment', 'min')));
 
 I18n.configure({
   locales: ['tw', 'en'],
@@ -71,13 +66,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/product', productRouter);
-app.use('/login', loginRouter);
-app.use('/register', registerRouter);
-app.use('/user', userRouter);
-app.use('/checkout', checkoutRouter);
-app.use('/order', orderRouter);
+app.use(routers);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

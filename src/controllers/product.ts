@@ -1,39 +1,36 @@
 import { Request, Response, NextFunction } from 'express';
 import { Product } from '../db/models/Product';
-import { Op } from 'sequelize';
 import axios from 'axios';
 import _ from 'lodash';
-import { isAjax } from '../services/checkTypes';
 
 const env = process.env.NODE_ENV || 'production';
 const config = require('../../config')[env];
 
 let options = { headers: { Authorization: config.clientId } };
 
-export const query = async (req: Request, res: Response) => {
-  if (isAjax(req)) {
-    let productId = req.params.id;
-    let product = await Product.findByPk(productId);
-    res.json({ product });
-  } else {
-    res.render('product');
-  }
+export const queryAll = (req: Request, res: Response) => {
+  Product.findAll().then(products => {
+    res.json({ products });
+  });
 }
 
-export const queryAll = async (req: Request, res: Response) => {
-  let products = await Product.findAll({
-    where: {
-      startDate: { [Op.lte]: new Date() },
-      endDate: { [Op.gt]: new Date() }
-    }
+export const querySelect = (req: Request, res: Response) => {
+  Product.findAll({
+    attributes: ['id', 'name']
+  }).then(products => {
+    res.json({ products });
   });
-  res.render('index', {
-    products
+}
+
+export const queryById = (req: Request, res: Response) => {
+  let id = req.params.id;
+  Product.findByPk(id).then(product => {
+    res.json({ product });
   });
 }
 
 export const createProduct = async (req: Request, res: Response) => {
-  let { name, price, cropBase64, startDate, endDate, content, images, types } = req.body;
+  let { name, price, onSale, cropBase64, startDate, endDate, content, images, types } = req.body;
   let { data } = await axios.post('https://api.imgur.com/3/image', { image: cropBase64 }, options);
   let { link, deletehash } = data.data;
   let items = [];
@@ -45,15 +42,14 @@ export const createProduct = async (req: Request, res: Response) => {
   });
   types = types || [];
   let product = await Product.create({
-    name, price, startDate, endDate, link, deletehash, content, images: items, types: types
+    name, price, onSale, startDate, endDate, link, deletehash, content, images: items, types: types
   });
   res.json({ product });
 }
 
 export const updateProduct = async (req: Request, res: Response) => {
-  let id = req.params.id;
   let { product, cropBase64 } = req.body;
-  let { name, price, startDate, endDate, link, deletehash, content, types } = product;
+  let { id, name, price, onSale, startDate, endDate, link, deletehash, content, types } = product;
   let urls = product.images;
   let images = [];
   _.each(urls, item => {
@@ -63,15 +59,15 @@ export const updateProduct = async (req: Request, res: Response) => {
       productId: id
     });
   });
-  if (product.deletehash) {
+  if (!deletehash) {
     let { data } = await axios.post('https://api.imgur.com/3/image', { image: cropBase64 }, options);
-    link = data.link;
-    deletehash = data.deletehash;
+    link = data.data.link;
+    deletehash = data.data.deletehash;
   }
   types = types || [];
   Product.findByPk(id).then(item => {
     item.update({
-      name, price, startDate, endDate, link, deletehash, content, images, types
+      name, price, onSale, startDate, endDate, link, deletehash, content, images, types
     }).then(() => {
       res.json({ isOK: true });
     });

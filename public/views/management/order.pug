@@ -2,29 +2,47 @@ extends ../common/layout
 
 block content
   .row.app.justify-content-md-center(v-cloak)
+    .col-sm-12.col-lg-8.form-inline.form-group
+      .form-inline.col-5
+        label.form-label 以使用者為條件
+        select.form-control(v-model="userId")
+          option(value="") 全部
+          option(v-for="user in users", :value="user.userId") {{user.username}}
+      .form-inline.col-5
+        label.form-label 以商品為條件
+        select.form-control(v-model="productId")
+          option(value="") 全部
+          option(v-for="product in products", :value="product.id") {{product.name}}
+      .col-2
+        button.btn.btn-success(@click="query") 查詢
     .col-sm-12.col-lg-8
       table.table.table-responsive-sm.table-striped.table-bordered
         thead.table-info
           tr
             th.text-center(scope="col") #
-            th.text-center(scope="col") orderTime
-            th.text-center(scope="col") userId
-            th.text-center(scope="col") count
-            th.text-center(scope="col") amount
-            th.text-center(scope="col") status
+            th.text-center(scope="col") {{$t('__html.order.orderTime')}}
+            th.text-center(scope="col") {{$t('__html.order.userId')}}
+            th.text-center(scope="col") {{$t('__html.order.count')}}
+            th.text-center(scope="col") {{$t('__html.order.amount')}}
+            th.text-center(scope="col") {{$t('__html.order.status')}}
+            th.text-center(scope="col") #
         tbody
           template(v-for="order, index in orders")
             tr
               td.text-truncate.align-middle.text-center
                 i.fa.action-click(:class="{ 'fa-plus': !opened.includes(order.id), 'fa-minus': opened.includes(order.id) }", aria-hidden="true", @click="toggle(order.id)")
-              td.text-truncate.align-middle.text-center {{order.orderTime}}
+              td.text-truncate.align-middle.text-center {{order.orderTime | orderTime}}
               td.text-truncate.align-middle.text-center {{order.userId}}
-              td.text-truncate.align-middle.text-center {{order.count}}
-              td.text-truncate.align-middle {{order.amount}}
-              td.text-truncate.align-middle.text-right {{order.status}}
+              td.text-truncate.align-middle.text-right {{order.count}}
+              td.text-truncate.align-middle.text-right {{order.amount}}
+              td.text-truncate.align-middle.text-center {{$t('__html.order.orderStatus.' + order.status)}}
+              td.text-truncate.align-middle.text-center
+                .btn-group
+                  button.btn.btn-success(type="button", @click="checkIn(index)") 登記
+                  button.btn.btn-danger(type="button", @click="deleteOrder(index)") 刪除
             tr(v-if="opened.includes(order.id)", v-for="product, i in order.products")
               td.text-truncate.align-middle.text-center {{i + 1}}
-              td(colspan=5)
+              td(colspan=6)
                 p 
                   img(:src="product.link", style="maxHeight: 90px")
                 p name: {{product.name}}

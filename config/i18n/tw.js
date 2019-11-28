@@ -7,7 +7,10 @@ export default {
     update: '更新',
     delete: '刪除',
     addItem: '{name}加入購物車',
-    order: '訂單確認'
+    order: '訂單確認',
+    error: {
+      password: '密碼錯誤'
+    }
   },
   __html: {
     feature: '功能',
@@ -18,11 +21,18 @@ export default {
       password: '用戶密碼',
       confirm: '確認密碼',
       email: '電子郵件',
-      cellPhone: '手機號碼'
+      cellPhone: '手機號碼',
+      status: '身份',
+      authority: {
+        0: '顧客',
+        1: '賣家',
+        99: '管理員'
+      }
     },
     product: {
       name: '商品名稱',
-      price: '商品價格',
+      price: '商品原價',
+      onSale: '商品特價',
       preview: '商品預覽',
       url: '圖片網址',
       images: '商品圖片',
@@ -53,6 +63,17 @@ export default {
       seven: '7-11',
       family: '全家',
       hilife: '萊爾富'
+    },
+    order: {
+      orderTime: '訂購時間',
+      userId: '訂購者名稱',
+      count: '訂單總件數',
+      amount: '訂單總金額',
+      status: '訂單狀態',
+      orderStatus: {
+        N: '未登記',
+        Y: '已登記'
+      }
     }
   },
   __validator: {

@@ -13,6 +13,7 @@ new Vue({
       id: '',
       name: '',
       price: 0,
+      onSale: 0,
       types: [],
       link: '',
       startDate: '',
@@ -26,7 +27,7 @@ new Vue({
   created() {
     $loading.show();
     let productId = location.pathname.split('/').pop();
-    Axios.get(`/product/${productId}`).then(res => {
+    Axios.get(`/rest/product/i/${productId}`).then(res => {
       let { product } = res.data;
       this.product = product;
       this.type = this.product.types.length ? this.product.types[0].text : '';
@@ -57,11 +58,11 @@ new Vue({
     buyItem: async function () {
       let success = await this.$validate();
       if (success) {
-        let { id, name, price, link } = this.product;
+        let { id, name, price, link, onSale } = this.product;
         let { type, count } = this;
         price = parseInt(price);
         _cart.addItem({
-          id, name, price, link, type, count
+          id, name, price, link, type, count, onSale
         });
         _message.info(this.$t('__message.success', { action: this.$t('__message.addItem', { name: this.product.name }) }));
       }

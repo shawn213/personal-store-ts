@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { query } from '../controllers/userController';
+import { init, serverReply } from '../../controllers/checkout';
 
 const router = Router();
 
 router.route('/')
-  .get(query)
-  .patch();
+  .get(init)
+  .post(serverReply);
 
 export default router;
