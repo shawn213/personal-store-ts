@@ -5,7 +5,7 @@ new Vue({
     opened: []
   },
   created() {
-    axios.get('/rest/order').then(res => {
+    axios.get('/rest/order/1').then(res => {
       this.orders = res.data.orders;
     }).catch(e => {
       sessionStorage.removeItem('user');

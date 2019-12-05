@@ -26,5 +26,5 @@ export const register = async (req: Request, res: Response) => {
     } else {
       res.json({ isOK: false, msg: '用戶帳號已註冊' });
     }
-  })
+  });
 }

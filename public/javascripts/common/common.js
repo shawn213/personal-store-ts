@@ -64,6 +64,8 @@ Vue.prototype._init = function (options) {
   })
 }
 
+axios.defaults.withCredentials = true;
+
 document.addEventListener("DOMContentLoaded", function () {
   let values = document.getElementsByClassName('currency');
   for (let i = 0; i < values.length; i++) {

@@ -46,9 +46,10 @@ new Vue({
     _cart.showCart();
     this.$watch("products", function (after, before) {
       after.filter(function (p, idx) {
-        vm.products[idx].subTotal = p.count * p.price;
+        vm.products[idx].subTotal = p.count * p.onSale;
         return true;
       });
+      window.sessionStorage.cart = JSON.stringify(vm.products);
       vm.sumTotal = _.sumBy(this.products, 'subTotal');
     }, { deep: true, immediate: true });
     let storeUrl = document.querySelector('#storeUrl').innerHTML;

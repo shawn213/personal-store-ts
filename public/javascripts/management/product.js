@@ -1,7 +1,7 @@
 import Crooper from 'cropperjs';
 import DatePicker from 'vue2-datepicker';
 import moment from 'moment';
-import axios from 'axios';
+import Axios from 'axios';
 import _ from 'lodash';
 import marked from 'marked';
 import emoji from 'node-emoji';
@@ -276,7 +276,7 @@ new Vue({
     },
     uploadImage(base64) {
       return new Promise((resolve, reject) => {
-        axios.post('https://api.imgur.com/3/image', {
+        Axios.post('https://api.imgur.com/3/image', {
           image: base64
         }, {
           headers: {

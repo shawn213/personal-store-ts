@@ -24,8 +24,10 @@ window.$navbar = new Vue({
       this.auth = 0;
       this.isLogin = false;
       axios.delete('/rest/main/logout').then(res => {
-        if (res.data.isOK)
+        if (res.data.isOK) {
+          window.localStorage.removeItem('token');
           location = '/';
+        }
       });
     },
     refresh() {

@@ -1,6 +1,5 @@
 import marked from 'marked';
 import _ from 'lodash';
-import Axios from 'axios';
 import emoji from 'node-emoji';
 import hljs from 'highlight.js';
 
@@ -27,7 +26,7 @@ new Vue({
   created() {
     $loading.show();
     let productId = location.pathname.split('/').pop();
-    Axios.get(`/rest/product/i/${productId}`).then(res => {
+    axios.get(`/rest/product/i/${productId}`).then(res => {
       let { product } = res.data;
       this.product = product;
       this.type = this.product.types.length ? this.product.types[0].text : '';

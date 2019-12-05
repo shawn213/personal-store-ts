@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
 import mainRouter from './page/main';
 import productRouter from './page/product';
@@ -27,10 +29,39 @@ router.use('/order', orderRouter);
 router.use('/product', productRouter);
 router.use('/checkout', checkoutRouter);
 router.use('/register', registerRouter);
+router.use('/startup', (req, res) => {
+  res.json({ isOK: true });
+});
 
 router.use('/m/user', userManagement);
 router.use('/m/order', orderManagement);
 router.use('/m/product', productManagement);
+
+router.use(['/rest/:path', '/rest/:path/:sub'], (req, res, next) => {
+  let authorization = req.header('Authorization');
+  let { path, sub } = req.params;
+  if (!authorization && (path === 'login' || path === 'register' || path === 'main')) {
+    next();
+  } else {
+    let [bearer, token] = _.split(authorization, ' ');
+    if (bearer === 'Bearer') {
+      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+          if (err.name === 'TokenExpiredError') {
+            res.status(403);
+          } else {
+            next(err);
+          }
+        } else {
+          req.session.user = decoded;
+          next();
+        }
+      });
+    } else {
+      res.status(401).send('沒權限');
+    }
+  }
+});
 
 router.use('/rest/user', userRest);
 router.use('/rest/main', mainRest);
