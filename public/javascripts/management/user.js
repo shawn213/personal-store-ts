@@ -2,11 +2,13 @@ new Vue({
   el: '.app',
   data: {
     users: [],
-    isOwner: false
+    isOwner: false,
+    isManager: false
   },
   created() {
     if ($navbar.auth > 0) {
       this.isOwner = $navbar.auth == 99;
+      this.isManager = $navbar.auth > 0;
       axios.get('/rest/user/1').then(res => {
         this.users = res.data.users;
       });
@@ -33,9 +35,9 @@ new Vue({
     },
     reset: async function (index) {
       let user = this.users[index];
-      axios.patch('/user', { user }).then(res => {
+      axios.patch('/rest/user', { user }).then(res => {
         this.users[index] = res.data.user;
-        _message.success('電子郵件已發送');
+        _message.success('已將顧客的密碼重設為手機號碼');
       });
     }
   }

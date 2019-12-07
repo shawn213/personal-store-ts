@@ -10,8 +10,8 @@ block content
             th(scope="col") {{$t('__html.user.username')}}
             th(scope="col") {{$t('__html.user.email')}}
             th(scope="col") {{$t('__html.user.cellPhone')}}
-            th(scope="col", v-show="isOwner") {{$t('__html.user.status')}}
-            th(scope="col", colspan=2, v-show="isOwner") {{$t('__html.feature')}}
+            th(scope="col", v-show="isOwner | isManager") {{$t('__html.user.status')}}
+            th(scope="col", colspan=2, v-show="isOwner | isManager") {{$t('__html.feature')}}
         tbody
           tr(v-for="user, index in users")
             th(scope="row") {{index+1}}
@@ -19,10 +19,10 @@ block content
             td.text-truncate.align-middle {{user.email}}
             td.text-truncate.align-middle {{user.cellPhone}}
             td.text-truncate.align-middle {{$t('__html.user.authority.' + user.authority)}}
-            td.text-center.align-middle(v-show="isOwner")
+            td.text-center.align-middle(v-show="isOwner | isManager")
               button.btn.btn-success(@click="changeAuth(index, 1)")
                 i.fa.fa-chevron-up(aria-hidden="true")
-              botton.btn.btn-danger(@click="changeAuth(index, -1)")
+              botton.btn.btn-dark(@click="changeAuth(index, -1)")
                 i.fa.fa-chevron-down(aria-hidden="true")
             td.align-middle(v-show="isOwner")
               button.btn.btn-danger.btn-block(type="button", @click="reset") {{$t('__html.btn.resetPW')}}

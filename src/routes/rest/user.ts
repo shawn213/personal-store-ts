@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { queryAll, querySelect, changeIdentity } from '../../controllers/user';
+import { queryAll, querySelect, changeIdentity, reset } from '../../controllers/user';
 
 const router = Router();
 
@@ -10,6 +10,7 @@ router.route('/2')
   .get(querySelect);
 
 router.route('/')
-  .put(changeIdentity);
+  .put(changeIdentity)
+  .patch(reset);
 
 export default router;

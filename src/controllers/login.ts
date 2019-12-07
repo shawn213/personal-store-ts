@@ -13,9 +13,9 @@ export const login = (req: Request, res: Response) => {
   }).then(user => {
     if (user && bcrypt.compareSync(password, user.password)) {
       let token = genJWT(req, user);
-      res.json({ user: { userId, authority: user.authority }, token });
+      res.json({ isOK: true, user: { userId, authority: user.authority }, token });
     } else {
-      res.status(401);
+      res.json({ isOK: false });
     }
   });
 }

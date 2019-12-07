@@ -53,6 +53,8 @@ router.use(['/rest/:path', '/rest/:path/:sub'], (req, res, next) => {
             next(err);
           }
         } else {
+          let user = decoded;
+          user['id'] = decoded['sub'];
           req.session.user = decoded;
           next();
         }
