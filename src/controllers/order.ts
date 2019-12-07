@@ -15,7 +15,8 @@ export const query = (req: Request, res: Response) => {
     }
   } else if (userId && productId) {
     where = {
-      [Op.or]: [{ userId }, { products: { [Op.contains]: [{ id: productId }] } }]
+      userId,
+      products: { [Op.contains]: [{ id: productId }] }
     }
   }
   let user = req.session.user;
@@ -23,6 +24,12 @@ export const query = (req: Request, res: Response) => {
     res.status(500).json({});
   } else if (user.authority === 0) {
     where['userId'] = user.userId;
+    Order.findAll({
+      where
+    }).then(orders => {
+      res.json({ orders });
+    });
+  } else {
     Order.findAll({
       where
     }).then(orders => {
