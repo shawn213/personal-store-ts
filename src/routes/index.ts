@@ -48,11 +48,7 @@ router.use(['/rest/:path', '/rest/:path/:sub'], (req, res, next) => {
     if (bearer === 'Bearer') {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-          if (err.name === 'TokenExpiredError') {
-            res.status(403).json({});
-          } else {
-            next(err);
-          }
+          res.status(403).json({});
         } else {
           let user = JwtUtil.decode(decoded);
           req.session.user = user;

@@ -10,6 +10,8 @@ rest.delete('/logout', (req, res) => {
   req.session.destroy(e => {
     if (!e) {
       res.json({ isOK: true });
+    } else {
+      res.json({ isOK: false, error: e });
     }
   });
 });

@@ -18,15 +18,18 @@ axios.interceptors.response.use(
   error => {
     const errRes = error.response;
     if (errRes.status === 401) {
-      window.localStorage.removeItem(TOKEN);
-      // swal('Auth Error!', `${errRes.data.error.message}, please login!`, 'error')
-      //   .then(() => {
-      //     history.push('/login');
-      //   });
+      logout();
       location = '/login';
     } else if (errRes.status === 403) {
-      window.localStorage.removeItem(TOKEN);
-      location = '/login';
+      logout();
+      location = '/';
     }
     return Promise.reject(error.message);
   });
+
+function logout() {
+  window.localStorage.removeItem(TOKEN);
+  window.sessionStorage.removeItem('user');
+  $navbar.auth = 0;
+  $navbar.isLogin = false;
+}
