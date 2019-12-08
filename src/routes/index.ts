@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
+import JwtUtil from '../services/utils/JwtUtil';
 
 import mainRouter from './page/main';
 import productRouter from './page/product';
@@ -48,14 +49,13 @@ router.use(['/rest/:path', '/rest/:path/:sub'], (req, res, next) => {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
           if (err.name === 'TokenExpiredError') {
-            res.status(403);
+            res.status(403).json({});
           } else {
             next(err);
           }
         } else {
-          let user = decoded;
-          user['id'] = decoded['sub'];
-          req.session.user = decoded;
+          let user = JwtUtil.decode(decoded);
+          req.session.user = user;
           next();
         }
       });

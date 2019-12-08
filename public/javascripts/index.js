@@ -33,7 +33,7 @@ new Vue({
       let res = await axios.delete(`/rest/product/i/${id}`);
       if (res.data.isOK) {
         this.products.splice(index, 1);
-        _message.success(this.$t('__html.success', this.$t('__html.delete')));
+        _message.success(this.$t('__message.success', { action: this.$t('__message.delete') }));
       } else {
         _message.danger('is not OK');
       }

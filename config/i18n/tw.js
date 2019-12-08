@@ -37,7 +37,8 @@ export default {
       url: '圖片網址',
       images: '商品圖片',
       range: '團購時間設定',
-      content: '商品描述'
+      content: '商品描述',
+      types: '商品型錄'
     },
     btn: {
       create: '新增',

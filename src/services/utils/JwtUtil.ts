@@ -8,7 +8,7 @@ class JwtUtil {
   static generate(user: User, url: string): string {
     let payload = _.pick(user, this.payloadKeys);
     return jwt.sign(payload, process.env.JWT_SECRET, {
-      algorithm: 'RS256',
+      // algorithm: 'RS256',
       expiresIn: '30m',
       issuer: url,
       subject: user.id
@@ -21,3 +21,5 @@ class JwtUtil {
     return user;
   }
 }
+
+export default JwtUtil;

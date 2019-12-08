@@ -2,7 +2,6 @@
   "__home": "日韓團購網",
   "__management": "管理功能",
   "__wait": "載入中...",
-  "login.success": "登入成功",
-  "login.fail": "登入失敗 %s",
-  "password.error": "密碼錯誤"
+  "__message.password.fail": "密碼錯誤",
+  "__message.userId.notFound": "用戶帳號不存在"
 }

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { User } from '../db/models/User';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import _ from 'lodash';
+import JwtUtil from '../services/utils/JwtUtil';
 
 export const login = (req: Request, res: Response) => {
   let { userId, password } = req.body;
@@ -11,23 +11,14 @@ export const login = (req: Request, res: Response) => {
       userId
     }
   }).then(user => {
-    if (user && bcrypt.compareSync(password, user.password)) {
-      let token = genJWT(req, user);
-      res.json({ isOK: true, user: { userId, authority: user.authority }, token });
+    if (!user) {
+      res.json({ isOK: false, msg: res.__('__message.userId.notFound') });
+    } else if (!bcrypt.compareSync(password, user.password)) {
+      res.json({ isOK: false, msg: res.__('__message.password.fail') });
     } else {
-      res.json({ isOK: false });
+      let issuer = req.protocol + '://' + req.get('host') + req.originalUrl;
+      let token = JwtUtil.generate(user, issuer);
+      res.json({ isOK: true, user: { userId, authority: user.authority }, token });
     }
-  });
-}
-
-function genJWT(req: Request, user: User) {
-  let { id, userId, username, cellPhone, email, authority } = user;
-  let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  return jwt.sign({
-    userId, username, cellPhone, email, authority
-  }, process.env.JWT_SECRET, {
-    issuer: fullUrl,
-    expiresIn: '30m',
-    subject: id
   });
 }

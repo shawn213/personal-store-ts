@@ -1,7 +1,7 @@
 {
-	"__management": "管理功能",
-	"__wait": "載入中...",
-	"__home": "日韓團購網",
-	"password.error": "password.error",
-	"login.fail": "login.fail"
+  "__management": "管理功能",
+  "__wait": "載入中...",
+  "__home": "日韓團購網",
+  "__message.password.fail": "密碼錯誤",
+  "__message.userId.notFound": "用戶帳號不存在"
 }

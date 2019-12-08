@@ -25,7 +25,7 @@ new Vue({
             $navbar.refresh();
             location = '/';
           } else {
-            _message.danger(this.$t('__message.error.password'));
+            _message.danger(res.data.msg);
             $loading.hide();
           }
         });
