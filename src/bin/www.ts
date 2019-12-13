@@ -7,7 +7,8 @@
 import app from '../app';
 import Debug from 'debug';
 import http from 'http';
-import {db} from '../db';
+import { db } from '../db';
+import { connetion } from '../services/socket';
 
 const debug = Debug('personal-store-ts:server');
 
@@ -23,6 +24,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', connetion);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -31,7 +34,7 @@ var server = http.createServer(app);
 //   console.log(`create databases and tables complate`);
 
 // });
-db.sync({alter: process.env.ALTER_TABLE === 'true', force: process.env.DROP_TABLE === 'true'}).then(() => {
+db.sync({ alter: process.env.ALTER_TABLE === 'true', force: process.env.DROP_TABLE === 'true' }).then(() => {
   console.log(`create database`);
   server.listen(port);
   server.on('error', onError);
@@ -63,7 +66,7 @@ function normalizePort(val: string) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error:any) {
+function onError(error: any) {
   if (error.syscall !== 'listen') {
     throw error;
   }

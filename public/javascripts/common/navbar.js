@@ -8,10 +8,15 @@ window.$navbar = new Vue({
     items: [
       { name: 'suyeon', link: 'https://i.imgur.com/Bqqw622.jpg' }
     ],
-    userInfo: {}
+    userInfo: {},
+    online: 0
   },
   created() {
     this.refresh();
+    let socket = io.connect();
+    socket.on('online', (data) => {
+      this.online = data.online;
+    });
   },
   computed: {
     count: function () {

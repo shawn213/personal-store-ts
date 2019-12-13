@@ -1,6 +1,7 @@
 block navbar
   nav#navbar(class="navbar fixed-top navbar-expand-md navbar-dark bg-info")
     a(class="navbar-brand" href="/") #{__('__home')}
+    a(class="navbar-brand", aria-haspopup="true", aria-expanded="false") 在線人數：{{online}}
     button(type="button", class="navbar-toggler", data-toggle="collapse", data-target="#collapsibleNavbar")
       span(class="navbar-toggler-icon")
     div(class="collapse navbar-collapse", id="collapsibleNavbar")
@@ -10,7 +11,7 @@ block navbar
           div(class="dropdown-menu", aria-labelledby="navbarDropdownMenuLink")
             a(class="dropdown-item", href="/m/product") {{$t('__menu.management.product'/*登入商品*/)}}
             a.dropdown-item(href="/m/user") {{$t('__menu.management.user'/*管理客戶*/)}}
-            a.dropdown-item(href="/m/order") {{$t('__menu.management.order'/*管理客戶*/)}}
+            a.dropdown-item(href="/m/order") {{$t('__menu.management.order'/*管理訂單*/)}}
       ul(class="navbar-nav")
         li.dropdown.nav-item
           i.nav-link.action-click(class="far fa-user fa-2x", style="color: white", data-toggle="dropdown")

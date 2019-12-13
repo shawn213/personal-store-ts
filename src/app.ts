@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, '../node_modules', 'vue', 'dist')));
 app.use(express.static(path.join(__dirname, '../node_modules', 'highlight.js')));
 app.use(express.static(path.join(__dirname, '../node_modules', 'axios', 'dist')));
 app.use(express.static(path.join(__dirname, '../node_modules', 'moment', 'min')));
+app.use(express.static(path.join(__dirname, '../node_modules', 'socket.io-client', 'dist')));
 
 I18n.configure({
   locales: ['tw', 'en'],

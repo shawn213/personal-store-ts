@@ -104,7 +104,7 @@ export default {
   __menu: {
     management: {
       product: '登入商品',
-      user: '管理使用者',
+      user: '管理用戶',
       order: '管理訂單'
     },
     user: {
