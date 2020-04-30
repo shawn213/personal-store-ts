@@ -28,7 +28,7 @@
     "highlight.js": "^9.15.10",
     "http-errors": "~1.6.3",
     "i18n": "^0.8.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-cropper": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
